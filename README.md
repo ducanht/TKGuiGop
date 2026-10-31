@@ -1,6 +1,9 @@
 # HỆ THỐNG QUẢN TRỊ & MÔ PHỎNG SẢN PHẨM TIẾT KIỆM GỬI GÓP ĐỊNH KỲ
 ## QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ (THÔN TÂN LỘC, XÃ QUÝ LỘC, TỈNH THANH HOÁ)
 
+> 🌐 **TRUY CẬP TRỰC TIẾP TRÊN GITHUB PAGES**: [https://ducanht.github.io/TKGuiGop/](https://ducanht.github.io/TKGuiGop/)  
+> 📦 **KHO MÃ NGUỒN GITHUB**: [https://github.com/ducanht/TKGuiGop](https://github.com/ducanht/TKGuiGop)
+
 Dự án cung cấp bộ công cụ toàn diện phục vụ công tác xây dựng, thẩm định Hội đồng quản trị, đào tạo cán bộ, mô phỏng tài chính tự động và quản lý phát hành sản phẩm **"Tiết kiệm gửi góp định kỳ"** tại Quỹ tín dụng nhân dân Yên Thọ.
 
 ---
@@ -16,84 +19,62 @@ Dự án cung cấp bộ công cụ toàn diện phục vụ công tác xây d�
 
 ---
 
-## 📂 2. Cấu Trúc Thư Mục Dự Án (`TKGuiGop/`)
+## 📁 2. Cấu Trúc Thư Mục Dự Án (`TKGuiGop/`)
 
 ```
 d:\Antigravity Projects\TKGuiGop\
-├── index.html                           # WebApp chính thức duy nhất (mở trực tiếp bằng trình duyệt)
+├── index.html                           # Single-file WebApp chính thức (PWA Offline)
 ├── README.md                            # Tài liệu tổng quan kiến trúc & hướng dẫn vận hành
-│
-├── docs/                                # Toàn bộ hồ sơ pháp lý, quy chế & văn bản chỉ đạo
-│   ├── Quyche_HDQT.md                   # Toàn văn Quyết định HĐQT & Quy định 4 Chương, 10 Điều (Phương án 1)
-│   ├── Quyche_2_DaChuKy_HDQT.md         # Toàn văn Quy định đa chu kỳ: Tháng, Quý, 6T (Phương án 2)
-│   ├── Bao_Cao_Phan_Tich_HDQT.md        # Toàn văn Báo cáo phân tích tính thiết thực & hiệu quả gửi HĐQT
-│   ├── Bo_Ho_So_Trien_Khai_Toan_Dien.md # Bộ hồ sơ đầy đủ: Tờ trình, Kế hoạch, Kịch bản tư vấn, Biểu mẫu
-│   ├── Ke_Hoach_Trien_Khai_Va_Tham_Dinh.md # Kế hoạch triển khai & Kênh tiếp nhận đánh giá 11 CBNV/HĐQT
-│   └── TK_GuiGop_Draft.html             # Bản thảo giao diện khởi tạo ban đầu
-│
-├── backend/                             # Mã nguồn Google Apps Script & Tích hợp CSDL Google Sheets
-│   ├── Code.js                          # Xử lý API doGet/doPost, ghi nhận ý kiến, LockService chống race-condition
-│   └── appsscript.json                  # Manifest cấu hình môi trường triển khai Google Apps Script
-│
-└── data/                                # Dữ liệu tham chiếu, nhật ký kiểm toán và bảng tham số
-    ├── ratetables.json                  # Biểu lãi suất các kỳ hạn (6, 12, 18, 24 tháng)
-    ├── gas_dump.json                    # Dữ liệu dump từ hệ thống Google Sheets phục vụ kiểm thử
-    ├── audit_sheet.txt                  # Nhật ký kiểm toán phân quyền & cấu trúc bảng dữ liệu
-    ├── config_utf8.txt                  # Tham số cấu hình hệ thống
-    ├── payload_utf8.txt                 # Cấu trúc payload gửi nhận API
-    └── tv_sheet_data.json               # Dữ liệu cán bộ thẩm định (11 cán bộ, vai trò, trạng thái)
+├── docs/                                # Toàn bộ hồ sơ tài liệu nghiệp vụ HĐQT
+│   ├── Quyche_HDQT.md                   # Dự thảo Quy chế Phương án 1 (Gửi hàng tháng)
+│   ├── Quyche_2_DaChuKy_HDQT.md         # Dự thảo Quy định Phương án 2 (Đa chu kỳ: 1T, 3T, 6T)
+│   ├── Bao_Cao_Phan_Tich_HDQT.md        # Báo cáo phân tích hiệu quả tài chính & kinh doanh (11 phần)
+│   ├── Ke_Hoach_Trien_Khai_Va_Tham_Dinh.md # Kế hoạch triển khai & phân công công tác
+│   └── Bo_Ho_So_Trien_Khai_Toan_Dien.md # Bộ hồ sơ mẫu biểu hành chính A4 chuẩn hóa
+├── backend/                             # Google Apps Script Backend (API Quản lý CSDL)
+│   ├── Code.js                          # Xử lý 3 sheets: Lai_suat_niem_yet, DANH_SACH_CAN_BO, Y_KIEN_DONG_GOP
+│   └── appsscript.json                  # Cấu hình Web App & quyền thực thi
+└── data/                                # Bộ nhớ đệm dữ liệu & bản sao lưu
 ```
 
 ---
 
-## ⚡ 3. Các Phân Hệ Chức Năng Trên WebApp (`index.html`)
+## 🌟 3. Các Phân Hệ Chức Năng Cốt Lõi Trên WebApp
 
-Hệ thống được thiết kế theo chuẩn nhận diện thương hiệu **Quỹ tín dụng nhân dân Yên Thọ**, chuẩn hóa giao diện di động theo `qtdyentho-ui-design-system`:
+1. **Tab 1: Mô Phỏng Tiền Gửi Góp**:
+   - Cho phép thiết lập số tiền nộp định kỳ, kỳ hạn gửi (3, 6, 12, 18, 24, 36, 60 tháng), chu kỳ nộp (1T, 3T, 6T).
+   - Tự động lập bảng kế hoạch chi tiết từng kỳ, tính lãi chính xác theo ngày thực gửi (cơ sở 365 ngày).
+   - Tích hợp 2 badge pháp lý chuẩn: `⚖️ Cơ sở 365 ngày (TT 14/2017)` & `🛡️ Rút trước hạn (TT 04/2022)`.
+   - Đối chiếu số tiền lãi nhận được với phương án gửi 1 lần cùng kỳ hạn và kỳ hạn tương đương dòng tiền.
+   - Hỗ trợ in Bảng Kế Hoạch A4 chuẩn hóa và Xuất file Excel (.xlsx).
 
-1. **Phân hệ Mô phỏng Tài chính & So sánh Lãi suất (Tab 1 - Mô phỏng)**:
-   - Tính lãi chính xác từng ngày thực gửi theo cơ sở **365 ngày** (Thông tư 14/2017/TT-NHNN).
-   - Bảng đối chiếu tự động giữa Gửi góp vs. Gửi 1 lần cùng kỳ hạn vs. Mở nhiều sổ nhỏ lẻ.
-   - Công cụ tư vấn so sánh: **Rút trước hạn hưởng lãi không kỳ hạn vs. Vay cầm cố Sổ gửi góp (tối đa 90% số dư gốc)** giúp bảo toàn tối đa quyền lợi khách hàng.
-   - Chức năng xuất và in trực tiếp **Bản minh họa tích lũy khổ A4 tiêu chuẩn** có mã QR và chữ ký giao dịch viên.
+2. **Tab 2: Định Giá & Lãi Suất Tham Chiếu (HĐQT)**:
+   - Áp dụng thuật toán tính sàn hòa vốn dòng tiền: $R_{ref} = \frac{\sum S_i \times D_i \times R_i}{\sum S_i \times D_i}$.
+   - Biểu lãi suất niêm yết hiện hành của Quỹ (6 mốc).
+   - Phân tích số tiền cụ thể Quỹ phải chi trả và Khách hàng nhận được giữa 3 phương án huy động.
 
-2. **Phân hệ Báo Cáo Phân Tích Tính Thiết Thực & Hiệu Quả (Tab 2 - Báo cáo)**:
-   - Toàn văn **11 Mục** Báo cáo phân tích chuyên sâu kính trình Hội đồng quản trị Quỹ tín dụng nhân dân Yên Thọ.
-   - Phân tích chi tiết 3 nhóm khách hàng (đặc biệt là tệp nhận lương hưu, trợ cấp xã hội đang giao dịch tại Quỹ).
-   - Các bảng tính so sánh chi phí vốn, bảng mô phỏng quy mô huy động và bảng minh họa lãi phải trả.
-   - Lộ trình triển khai theo giai đoạn, 15 tình huống phát sinh và bảng 18 câu hỏi & giải đáp chuẩn mực.
+3. **Tab 3: Quy Định Tiết Kiệm Gửi Góp**:
+   - Trình bày song song cả **Phương án 1 (Gửi hàng tháng)** và **Phương án 2 (Đa chu kỳ: tháng, quý, 6 tháng)**.
+   - Cơ chế đóng/mở từng điều khoản tự động, hỗ trợ Mở rộng tất cả / Thu gọn tất cả.
 
-3. **Phân hệ Quy Định Chi Tiết Sản Phẩm (Tab 3 - Quy định)**:
-   - Tích hợp bộ chuyển đổi 2 Phương án quy chế linh hoạt:
-     - **Phương án 1**: Chu kỳ hàng tháng (Kỳ hạn trọng tâm 12 tháng, 4 Chương, 10 Điều theo `Quyche.md`).
-     - **Phương án 2**: Đa chu kỳ gửi góp (Hàng tháng, Hàng quý, 06 tháng/lần, 5 Chương, 10 Điều theo `Quyche 2.md`).
-   - Sơ đồ định khoản kế toán 4 bút toán chuẩn mực chế độ kế toán QTDND (`TK 1011`, `TK 1311` - `TK 4232`, `TK 4913`, `TK 801`).
+4. **Tab 4: Báo Cáo Phân Tích (HĐQT)**:
+   - Đầy đủ 11 phần phân tích tài chính, chi phí vốn COF, an toàn thanh khoản, rủi ro kỳ hạn và kế hoạch tiếp thị.
 
-4. **Phân hệ Cẩm Nang 10 Tình Huống Nghiệp Vụ Tại Quầy (Tab 4 - Tình huống)**:
-   - Phân tích bản chất tài chính: Thời gian lưu vốn bình quân thực tế là 6,5 tháng và ưu điểm lãi suất dài hạn 5,5%/năm áp dụng cho tất cả các món gửi.
-   - Giải đáp 10 tình huống phổ biến tại quầy theo đúng điều khoản quy định: Nộp chậm (ân hạn 05 ngày làm việc), nộp sớm, nộp bù (không tính lãi hồi tố), gián đoạn nộp (bảo toàn gốc và lãi suất đã cam kết), vay cầm cố sổ, đáo hạn không đến nhận, thủ tục ủy quyền...
+5. **Tab 5: Cẩm Nang Nghiệp Vụ & Tình Huống**:
+   - Xử lý các tình huống thực tế phát sinh và 18 câu hỏi thường gặp (FAQs).
 
-5. **Phân hệ Biểu Mẫu & Tin Nhắn Zalo/SMS (Tab 5 - Biểu mẫu)**:
-   - Đơn đăng ký mở sổ gửi góp định kỳ.
-   - Khế ước cho vay cầm cố sổ gửi góp.
-   - Mẫu tin nhắn SMS / Zalo thông báo: Chào mừng mở sổ, Nhắc lịch nộp định kỳ trước 02 ngày, Cảm ơn nộp tiền thành công, Nhắc nộp bù kỳ lỡ, Thông báo sắp đến ngày đáo hạn.
+6. **Tab 6: Biểu Mẫu Nghiệp Vụ (A4)**:
+   - Hệ thống biểu mẫu hành chính phục vụ giao dịch tại quầy.
 
-6. **Kênh Tiếp Nhận Ý Kiến Đóng Góp Thẩm Định (Tab 6 - Góp ý)**:
-   - Menu điều hướng Bottom Navigation tiện lợi trên thiết bị di động.
-   - Tiếp nhận đánh giá số sao (1 - 5 sao), mức độ thiết thực và đóng góp ý kiến cụ thể.
-   - Tự động hiển thị danh sách cán bộ đã tham gia và danh sách cán bộ chưa tham gia để ban điều hành đôn đốc, theo dõi.
-   - Giao thức đồng bộ an toàn 100% qua Google Apps Script WebApp độc lập, Google Sheets được phân quyền bảo mật riêng tư.
+7. **Tab 7: Khảo Sát & Tổng Hợp Ý Kiến**:
+   - Kết nối trực tiếp CSDL Google Sheet (12 cán bộ nhân viên thực tế của QTDND Yên Thọ).
+   - Thiết kế tinh gọn, chống co bẹp chữ trên di động (Zero Truncate Policy).
+   - Tự do ghi nhận xét vắn tắt + Hàng nút gợi ý điền nhanh 1 chạm.
 
 ---
 
-## 🛠️ 4. Hướng Dẫn Vận Hành & Khởi Chạy
+## 📲 4. Cài Đặt Ứng Dụng PWA (Chạy Ngoại Tuyến)
 
-* **Mở trực tiếp trên máy tính hoặc di động**:
-  - Nhấp đúp chuột vào file `index.html` trong thư mục `D:\Antigravity Projects\TKGuiGop\`.
-  - Giao diện tự động co giãn thích ứng responsive mượt mà trên cả máy tính, máy tính bảng và điện thoại di động.
-
-* **Triển khai WebApp qua Cổng điều hành QTDND Yên Thọ**:
-  - File đã được đồng bộ sẵn trong kho lưu trữ `d:\Antigravity Projects\Qtdyentho-Tools\Tk_Guigop.html` và đẩy lên GitHub repo `qtdyentho_tools`.
-  - Có thể kích hoạt trực tiếp từ hệ thống PWA / Portal nội bộ của đơn vị.
-
----
-*Bản quyền tài liệu và phần mềm thuộc về Quỹ tín dụng nhân dân Yên Thọ - 2026.*
+- Trên điện thoại Android / Chrome: Bấm menu trình duyệt (⋮) $\rightarrow$ Chọn **"Thêm vào Màn hình chính"** (Add to Home Screen).
+- Trên iPhone / Safari: Bấm nút Chia sẻ (Share) $\rightarrow$ Chọn **"Thêm vào MH chính"** (Add to Home Screen).
+- Ứng dụng hoạt động mượt mà, lưu trữ dữ liệu nội bộ ngay cả khi không có kết nối Internet.

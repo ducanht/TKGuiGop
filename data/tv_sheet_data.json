@@ -1,0 +1,841 @@
+{
+  "success": true,
+  "notModified": false,
+  "dataVersion": "1793353117906",
+  "updatedAt": "30/10/2026 23:22:13",
+  "data": {
+    "config": {
+      "Tên Quỹ": "QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ",
+      "Trụ sở chính": "Thôn Tân Lộc, xã Quý Lộc, tỉnh Thanh Hoá",
+      "Địa bàn hoạt động": "Xã Quý Lộc • Xã Vĩnh Lộc • Xã Yên Trường",
+      "Điện thoại bàn": "0237.8770.793",
+      "Hotline 1": "0965.122.111",
+      "Hotline 2": "0941.562.789",
+      "Email": "qtdyentho@gmail.com",
+      "Giờ giao dịch Sáng": "Sáng: 07:15 - 11:45",
+      "Giờ giao dịch Chiều": "Chiều: 13:45 - 17:15",
+      "Khẩu hiệu": "Quỹ của mọi nhà, hài hoà lợi ích — An toàn - Hiệu quả - Phát triển bền vững",
+      "Thời lượng slide mặc định (giây)": "10",
+      "Chu kỳ kiểm tra cập nhật (phút)": "5",
+      "Link tải APK": "https://drive.usercontent.google.com/download?id=1UPF303Cimk7uJmMZt780_FO9kr6RHyd2&export=download&confirm=t",
+      "Phiên bản APK mới nhất": "4.3",
+      "Mã phiên bản APK": "18",
+      "Thời lượng slide tài chính 5 năm (giây)": "20",
+      "Thời lượng slide quy mô tài chính (giây)": "18",
+      "Bật nhạc nền": "Không",
+      "Link nhạc nền": "",
+      "Âm lượng nhạc nền (%)": "30",
+      "Tọa độ thời tiết (Vĩ độ, Kinh độ)": "20.0370, 105.5808",
+      "Tên địa danh thời tiết": "xã Quý Lộc",
+      "Thời lượng dừng mỗi thành viên HĐQT/BKS (giây)": "5",
+      "Nhiệm kỳ / Phụ đề HĐQT": "Nhiệm kỳ 2022 - 2027",
+      "Nhiệm kỳ / Phụ đề BKS": "Nhiệm kỳ 2022 - 2028",
+      "Tiêu đề Hội đồng Quản trị": "🏛️ HỘI ĐỒNG QUẢN TRỊ",
+      "Tiêu đề Ban Kiểm soát": "🛡️ BAN KIỂM SOÁT",
+      "Tiêu đề slide tài chính 5 năm": "",
+      "Tiêu đề phụ slide tài chính 5 năm": "",
+      "Tiêu đề slide quy mô tài chính": "",
+      "Tiêu đề slide chuyển khoản": "HƯỚNG DẪN THỰC HIỆN CHUYỂN KHOẢN VÀO TÀI KHOẢN QUỸ",
+      "Phụ đề slide chuyển khoản": "AN TOÀN • CHÍNH XÁC • GẠCH NỢ TỰ ĐỘNG & BẢO MẬT 100%",
+      "Nhãn thẻ tài khoản thụ hưởng": "TÀI KHOẢN THỤ HƯỞNG CHÍNH THỨC CỦA QUỸ",
+      "Nhãn số tài khoản Quỹ": "Số tài khoản:",
+      "Số tài khoản Quỹ": "3800001234567899",
+      "Nhãn chủ tài khoản Quỹ": "Chủ tài khoản:",
+      "Tên chủ tài khoản Quỹ": "QUY TIN DUNG NHAN DAN YEN THO",
+      "Nhãn ngân hàng thụ hưởng": "Tại ngân hàng:",
+      "Ngân hàng thụ hưởng": "Ngân hàng Hợp tác xã Việt Nam (Co-opBank)",
+      "Chi nhánh ngân hàng": "Chi nhánh Thanh Hóa",
+      "Link ảnh QR Quỹ": "",
+      "Nhãn hướng dẫn quét QR": "Quét mã VietQR nhanh bằng mọi App Ngân hàng hoặc MoMo",
+      "Tiêu đề cột nội dung CK": "Nội dung giao dịch",
+      "Tiêu đề cột cú pháp CK": "Cú pháp chuyển khoản chuẩn",
+      "Tiêu đề cột ghi chú CK": "Ghi chú / Hướng dẫn",
+      "Tiêu đề hộp quy chuẩn CK": "QUY CHUẨN KÝ TỰ & ĐỊNH DẠNG HỢP LỆ KHI CHUYỂN KHOẢN",
+      "Quy tắc chuyển khoản 1": "✦ Hỗ trợ Chữ IN HOA hoặc Chữ in thường KHÔNG DẤU (Ví dụ: TRA LAI HDTD SO... hoặc tra lai hdtd so...). Phân biệt rõ mục đích, người chuyển/nhận/sở hữu trong cú pháp.",
+      "Quy tắc chuyển khoản 2": "✦ Tuyệt đối KHÔNG VIẾT DẤU TIẾNG VIỆT (Tránh lỗi mã hóa hiển thị tên khách hàng/địa chỉ trên ứng dụng Ngân hàng).",
+      "Quy tắc chuyển khoản 3": "✦ KHÔNG DÙNG DẤU CHẤM (.) HOẶC PHẨY (,) trong số tiền (Ví dụ số tiền 100 triệu viết chập liền: 100000000).",
+      "Thời lượng slide chuyển khoản (giây)": "25",
+      "Tiêu đề slide lãi suất tiền gửi": "BIỂU LÃI SUẤT TIỀN GỬI TIẾT KIỆM NIÊM YẾT",
+      "Tiêu đề phụ slide lãi suất tiền gửi": "TIỀN GỬI TIẾT KIỆM ĐƯỢC BẢO HIỂM TIỀN GỬI VIỆT NAM BẢO VỆ 100%",
+      "Nhãn ngày áp dụng lãi suất tiền gửi": "Áp dụng từ:",
+      "Tiêu đề cột kỳ hạn gửi": "KỲ HẠN GỬI TIỀN",
+      "Tiêu đề cột lãi suất niêm yết": "LÃI SUẤT NIÊM YẾT (%/NĂM)",
+      "Tiêu đề cột lãi suất ưu đãi": "LÃI SUẤT ƯU ĐÃI (%/NĂM)",
+      "Tiêu đề cột ghi chú lãi suất ưu đãi": "ĐIỀU KIỆN & GHI CHÚ ƯU ĐÃI",
+      "Ghi chú chân trang lãi suất tiền gửi": "* Mức lãi suất có thể điều chỉnh linh hoạt theo từng thời kỳ theo quy định của Ngân hàng Nhà nước. Chi tiết liên hệ quầy giao dịch.",
+      "Thời lượng slide lãi suất tiền gửi (giây)": "22",
+      "Tiêu đề slide lãi suất cho vay": "BIỂU LÃI SUẤT CHO VAY VỐN TÍN DỤNG NIÊM YẾT",
+      "Tiêu đề phụ slide lãi suất cho vay": "TÍN DỤNG NÔNG NGHIỆP • NÔNG THÔN • KINH DOANH • TIÊU DÙNG",
+      "Nhãn ngày áp dụng lãi suất cho vay": "Áp dụng từ:",
+      "Tiêu đề cột gói vay": "CHƯƠNG TRÌNH / GÓI VAY TÍN DỤNG",
+      "Tiêu đề cột kỳ hạn vay": "KỲ HẠN VAY",
+      "Tiêu đề cột lãi suất thành viên": "KH THÀNH VIÊN (%/NĂM)",
+      "Tiêu đề cột lãi suất ngoài thành viên": "NGOÀI THÀNH VIÊN (%/NĂM)",
+      "Tiêu đề cột phương thức trả nợ": "HẠN MỨC & PHƯƠNG THỨC TRẢ NỢ",
+      "Ghi chú chân trang lãi suất cho vay": "* Thủ tục đơn giản, giải ngân nhanh chóng trong 24 giờ làm việc. Cán bộ tín dụng hướng dẫn hồ sơ tận nơi.",
+      "Thời lượng slide lãi suất cho vay (giây)": "20",
+      "Tiêu đề cột LS KH Thành viên": "KH THÀNH VIÊN (%/NĂM)",
+      "Tiêu đề cột LS KH Thường": "KH THƯỜNG (%/NĂM)",
+      "Tiêu đề hộp ưu đãi tiền gửi": "QUYỀN LỢI ƯU ĐÃI & BẢO HIỂM TIỀN GỬI DÀNH CHO KHÁCH HÀNG",
+      "Tiêu đề cột lãi suất cho vay": "LÃI SUẤT VAY (%/NĂM)",
+      "Màu chữ tiêu đề Quỹ": "#FFD54F",
+      "Tiêu đề cột quyền lợi tiền gửi": "QUYỀN LỢI, ƯU ĐÃI",
+      "Dòng ghi chú 1 chân trang lãi suất tiền gửi": "🛡️ 100% Tiền gửi tiết kiệm của Quý khách tại Quỹ được Bảo hiểm Tiền gửi Việt Nam bảo vệ toàn diện theo quy định.",
+      "Dòng ghi chú 2 chân trang lãi suất tiền gửi": "✦ Mức lãi suất có thể điều chỉnh linh hoạt theo từng thời kỳ theo quy định của Ngân hàng Nhà nước. Chi tiết liên hệ quầy giao dịch."
+    },
+    "bgm": {
+      "enabled": false,
+      "url": "",
+      "volumePercent": 30
+    },
+    "appUpdate": {
+      "latestVersionName": "4.3",
+      "latestVersionCode": 18,
+      "apkUrl": "https://drive.usercontent.google.com/download?id=1UPF303Cimk7uJmMZt780_FO9kr6RHyd2&export=download&confirm=t",
+      "mandatory": false,
+      "releaseNotes": "Bản phát hành v4.1: Tối ưu phân trang chuyển khoản & Biểu lãi suất tiết kiệm 4 kỳ hạn kèm Hộp ưu đãi"
+    },
+    "rateTables": [
+      {
+        "productType": "1. Tiết kiệm có kỳ hạn - Trả lãi cuối kỳ",
+        "applyDate": "01/07/2026",
+        "durationSec": 22,
+        "rows": [
+          {
+            "term": "Không kỳ hạn",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Gửi rút linh hoạt các ngày làm việc tại quầy",
+            "order": 1
+          },
+          {
+            "term": "01 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Áp dụng món gửi từ 100 triệu đồng trở lên",
+            "order": 2
+          },
+          {
+            "term": "02 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Áp dụng món gửi từ 100 triệu đồng trở lên",
+            "order": 3
+          },
+          {
+            "term": "03 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Kỳ hạn phổ thông, quay vòng vốn linh hoạt",
+            "order": 4
+          },
+          {
+            "term": "06 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Tặng quà tri ân thành viên gửi tiết kiệm",
+            "order": 5
+          },
+          {
+            "term": "09 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Tặng quà tri ân thành viên gửi tiết kiệm",
+            "order": 6
+          },
+          {
+            "term": "12 tháng ★",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Kỳ hạn ưu đãi đặc biệt cho Thành viên Quỹ",
+            "order": 7
+          },
+          {
+            "term": "18 - 24 tháng",
+            "rateMember": "",
+            "rateStandard": "",
+            "preferentialNote": "Lãi suất lũy tiến, sinh lời tối đa",
+            "order": 8
+          }
+        ]
+      }
+    ],
+    "loanRates": [
+      {
+        "id": "VAY01",
+        "loanType": "Cho vay Nông nghiệp & Nông thôn",
+        "term": "Ngắn hạn (≤ 12 tháng)",
+        "rate": "0.072",
+        "rateMember": "0.072",
+        "rateStandard": "0.072",
+        "limitNote": "Hộ gia đình trồng trọt, chăn nuôi, vật tư nông nghiệp",
+        "repaymentMethod": "Lãi trả hàng tháng, gốc trả cuối kỳ",
+        "disbursementSpeed": "Trong 24 giờ làm việc",
+        "applyDate": "01/07/2026",
+        "durationSec": 20,
+        "order": 1
+      },
+      {
+        "id": "VAY02",
+        "loanType": "Cho vay Sản xuất & Kinh doanh Dịch vụ",
+        "term": "Ngắn hạn (≤ 12 tháng)",
+        "rate": "0.075",
+        "rateMember": "0.075",
+        "rateStandard": "0.075",
+        "limitNote": "Hộ kinh doanh cá thể, buôn bán thương mại, dịch vụ",
+        "repaymentMethod": "Lãi trả hàng tháng, gốc trả phân kỳ linh hoạt",
+        "disbursementSpeed": "Trong 24 giờ làm việc",
+        "applyDate": "01/07/2026",
+        "durationSec": 20,
+        "order": 2
+      },
+      {
+        "id": "VAY03",
+        "loanType": "Cho vay Tiêu dùng & Đời sống Thành viên",
+        "term": "Trung hạn (12 - 36 tháng)",
+        "rate": "0.082",
+        "rateMember": "0.082",
+        "rateStandard": "0.082",
+        "limitNote": "Mua sắm thiết bị, đồ gia dụng, phương tiện sinh hoạt",
+        "repaymentMethod": "Gốc lãi trả đều hàng tháng",
+        "disbursementSpeed": "Trong 24 giờ làm việc",
+        "applyDate": "01/07/2026",
+        "durationSec": 20,
+        "order": 3
+      },
+      {
+        "id": "VAY04",
+        "loanType": "Cho vay Xây dựng, Sửa chữa Nhà ở",
+        "term": "Trung - Dài hạn (≤ 60 tháng)",
+        "rate": "0.085",
+        "rateMember": "0.085",
+        "rateStandard": "0.085",
+        "limitNote": "Xây mới, tôn tạo, nâng cấp công trình nhà ở kiên cố",
+        "repaymentMethod": "Lãi trả hàng tháng, gốc trả định kỳ theo tiến độ",
+        "disbursementSpeed": "Trong 48 giờ làm việc",
+        "applyDate": "01/07/2026",
+        "durationSec": 20,
+        "order": 4
+      }
+    ],
+    "transferGuide": {
+      "accountNo": "3800001234567899",
+      "accountName": "QUY TIN DUNG NHAN DAN YEN THO",
+      "bankName": "Ngân hàng Hợp tác xã Việt Nam (Co-opBank)",
+      "branch": "Chi nhánh Thanh Hóa",
+      "qrUrl": "",
+      "durationSec": 25,
+      "items": [
+        {
+          "tt": 1,
+          "content": "Trả lãi tiền vay",
+          "syntax": "TRA LAI HDTD SO [SO_HD] [HO_TEN]",
+          "note": "Ví dụ: TRA LAI HDTD SO 123 NGUYEN VAN A (hoặc tra lai hdtd so 123 nguyen van a)",
+          "order": 1
+        },
+        {
+          "tt": 2,
+          "content": "Gửi tiết kiệm",
+          "syntax": "GUI TIET KIEM [SO_SO] [HO_TEN]",
+          "note": "Ví dụ: GUI TIET KIEM 456789 TRAN THI B (hoặc gui tiet kiem 456789 tran thi b)",
+          "order": 2
+        },
+        {
+          "tt": 3,
+          "content": "Trả gốc tiền vay",
+          "syntax": "TRA GOC HDTD SO [SO_HD] [HO_TEN]",
+          "note": "Ví dụ: TRA GOC HDTD SO 123 NGUYEN VAN A (hoặc tra goc hdtd so 123 nguyen van a)",
+          "order": 3
+        },
+        {
+          "tt": 4,
+          "content": "Trả gốc lãi tiền vay",
+          "syntax": "TRA GOC LAI HDTD SO [SO_HD] [HO_TEN]",
+          "note": "Ví dụ: TRA GOC LAI HDTD SO 123 NGUYEN VAN A (hoặc tra goc lai hdtd so 123 nguyen van a)",
+          "order": 4
+        },
+        {
+          "tt": 5,
+          "content": "Tất toán tiền vay",
+          "syntax": "TAT TOAN HDTD SO [SO_HD] [HO_TEN]",
+          "note": "Ví dụ: TAT TOAN HDTD SO 123 NGUYEN VAN A (hoặc tat toan hdtd so 123 nguyen van a)",
+          "order": 5
+        },
+        {
+          "tt": 6,
+          "content": "Chuyển nhận tiền mặt",
+          "syntax": "CHUYEN TIEN MAT CHO [HO_TEN] [CCCD_SDT]",
+          "note": "Ví dụ: CHUYEN TIEN MAT CHO LE VAN C 038089123456 (hoặc sđt 0912345678)",
+          "order": 6
+        }
+      ]
+    },
+    "finance": null,
+    "finance5Years": [
+      {
+        "indicator": "1. Tổng nguồn vốn hoạt động",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "185.2"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "205.6"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "228.4"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "246.8"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "260"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "185.2",
+          "205.6",
+          "228.4",
+          "246.8",
+          "260"
+        ],
+        "latestYearValue": "260",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "185.2",
+        "y2023": "205.6",
+        "y2024": "228.4",
+        "y2025": "246.8",
+        "y2026": "260",
+        "unit": "Tỷ đồng",
+        "note": "Tăng trưởng bền vững hàng năm",
+        "order": 1
+      },
+      {
+        "indicator": "2. Vốn huy động tiền gửi",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "165"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "183.5"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "204.2"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "221.5"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "235"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "165",
+          "183.5",
+          "204.2",
+          "221.5",
+          "235"
+        ],
+        "latestYearValue": "235",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "165",
+        "y2023": "183.5",
+        "y2024": "204.2",
+        "y2025": "221.5",
+        "y2026": "235",
+        "unit": "Tỷ đồng",
+        "note": "Nguồn vốn huy động dân cư vững chắc",
+        "order": 2
+      },
+      {
+        "indicator": "3. Dư nợ cho vay thành viên",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "152"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "169.4"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "188.7"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "205.3"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "218"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "152",
+          "169.4",
+          "188.7",
+          "205.3",
+          "218"
+        ],
+        "latestYearValue": "218",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "152",
+        "y2023": "169.4",
+        "y2024": "188.7",
+        "y2025": "205.3",
+        "y2026": "218",
+        "unit": "Tỷ đồng",
+        "note": "Hỗ trợ phát triển sản xuất kinh doanh địa phương",
+        "order": 3
+      },
+      {
+        "indicator": "4. Vốn điều lệ",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "11.5"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "12.2"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "13.4"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "14.2"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "15"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "11.5",
+          "12.2",
+          "13.4",
+          "14.2",
+          "15"
+        ],
+        "latestYearValue": "15",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "11.5",
+        "y2023": "12.2",
+        "y2024": "13.4",
+        "y2025": "14.2",
+        "y2026": "15",
+        "unit": "Tỷ đồng",
+        "note": "Năng lực tài chính tự chủ vững mạnh",
+        "order": 4
+      },
+      {
+        "indicator": "5. Tỷ lệ nợ xấu trên tổng dư nợ",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "0.0028"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "0.0025"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "0.0022"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "0.002"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "< 0,30%"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "0.0028",
+          "0.0025",
+          "0.0022",
+          "0.002",
+          "< 0,30%"
+        ],
+        "latestYearValue": "< 0,30%",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "0.0028",
+        "y2023": "0.0025",
+        "y2024": "0.0022",
+        "y2025": "0.002",
+        "y2026": "< 0,30%",
+        "unit": "%",
+        "note": "Kiểm soát an toàn tuyệt đối (dưới 0,30%)",
+        "order": 5
+      },
+      {
+        "indicator": "6. Tổng số thành viên tham gia Quỹ",
+        "years": [
+          {
+            "year": "2022",
+            "label": "2022",
+            "value": "1620"
+          },
+          {
+            "year": "2023",
+            "label": "2023",
+            "value": "1685"
+          },
+          {
+            "year": "2024",
+            "label": "2024",
+            "value": "1740"
+          },
+          {
+            "year": "2025",
+            "label": "2025",
+            "value": "1802"
+          },
+          {
+            "year": "2026",
+            "label": "2026 (KH)",
+            "value": "1850"
+          }
+        ],
+        "yearLabels": [
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026 (KH)"
+        ],
+        "yearValues": [
+          "1620",
+          "1685",
+          "1740",
+          "1802",
+          "1850"
+        ],
+        "latestYearValue": "1850",
+        "latestYear": 2026,
+        "minYear": 2022,
+        "period": "2022 - 2026",
+        "y2022": "1620",
+        "y2023": "1685",
+        "y2024": "1740",
+        "y2025": "1802",
+        "y2026": "1850",
+        "unit": "Thành viên",
+        "note": "Uy tín lan tỏa rộng khắp 3 xã",
+        "order": 6
+      }
+    ],
+    "fin5yPeriod": "2022 - 2026",
+    "fin5yMinYear": 2022,
+    "fin5yMaxYear": 2026,
+    "boardDirectors": [
+      {
+        "id": "NS01",
+        "board": "HĐQT",
+        "fullName": "Trịnh Đức Anh",
+        "position": "Chủ tịch Hội đồng Quản trị",
+        "birthYear": "",
+        "partyPosition": "Bí thư chi bộ",
+        "degree": "Đại học - TCNH",
+        "seniority": "",
+        "hotline": "0965.122.111",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/10T949Y4NPuj2Xrl9n2L0rDVaSSGZJ0p5=w1600",
+        "durationSec": 5,
+        "order": 1
+      },
+      {
+        "id": "NS02",
+        "board": "HĐQT",
+        "fullName": "Nguyễn Văn Sơn",
+        "position": "Thành viên HĐQT - Giám đốc Quỹ",
+        "birthYear": "",
+        "partyPosition": "Phó bí thư chi bộ",
+        "degree": "Đại học QTKD",
+        "seniority": "",
+        "hotline": "0941.562.789",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+        "durationSec": 5,
+        "order": 2
+      },
+      {
+        "id": "NS03",
+        "board": "HĐQT",
+        "fullName": "Vũ Thị Hiền",
+        "position": "Thành viên HĐQT - Giám đốc Quỹ",
+        "birthYear": "",
+        "partyPosition": "Chi uỷ viên",
+        "degree": "Đại học",
+        "seniority": "",
+        "hotline": "0983.502.181",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/1hywhFv7U0lejgOnkjyYSOWOw0LjDbt8y=w1600",
+        "durationSec": 5,
+        "order": 3
+      }
+    ],
+    "supervisoryBoard": [
+      {
+        "id": "NS04",
+        "board": "BKS",
+        "fullName": "Bùi Thị Thảo",
+        "position": "Trưởng Ban Kiểm soát",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Đại học",
+        "seniority": "",
+        "hotline": "0839.062.825",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+        "durationSec": 5,
+        "order": 4
+      },
+      {
+        "id": "NS05",
+        "board": "BKS",
+        "fullName": "Trịnh Thị Hiền",
+        "position": "Thành viên BKS - Kiểm toán nội bộ",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Đại học Tài chính - Kế toán",
+        "seniority": "",
+        "hotline": "0948.784.333",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/1pShcrycBaT4Wp3-nK3fiKc3mMV495xD4=w1600",
+        "durationSec": 5,
+        "order": 5
+      },
+      {
+        "id": "NS06",
+        "board": "BKS",
+        "fullName": "Vũ Thị Thu",
+        "position": "Kiểm soát viên",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Cử nhân Tài chính - Ngân hàng",
+        "seniority": "",
+        "hotline": "0977.930.527",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+        "durationSec": 5,
+        "order": 6
+      }
+    ],
+    "leaders": [
+      {
+        "id": "NS01",
+        "board": "HĐQT",
+        "fullName": "Trịnh Đức Anh",
+        "position": "Chủ tịch Hội đồng Quản trị",
+        "birthYear": "",
+        "partyPosition": "Bí thư chi bộ",
+        "degree": "Đại học - TCNH",
+        "seniority": "",
+        "hotline": "0965.122.111",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/10T949Y4NPuj2Xrl9n2L0rDVaSSGZJ0p5=w1600",
+        "durationSec": 5,
+        "order": 1
+      },
+      {
+        "id": "NS02",
+        "board": "HĐQT",
+        "fullName": "Nguyễn Văn Sơn",
+        "position": "Thành viên HĐQT - Giám đốc Quỹ",
+        "birthYear": "",
+        "partyPosition": "Phó bí thư chi bộ",
+        "degree": "Đại học QTKD",
+        "seniority": "",
+        "hotline": "0941.562.789",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+        "durationSec": 5,
+        "order": 2
+      },
+      {
+        "id": "NS03",
+        "board": "HĐQT",
+        "fullName": "Vũ Thị Hiền",
+        "position": "Thành viên HĐQT - Giám đốc Quỹ",
+        "birthYear": "",
+        "partyPosition": "Chi uỷ viên",
+        "degree": "Đại học",
+        "seniority": "",
+        "hotline": "0983.502.181",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/1hywhFv7U0lejgOnkjyYSOWOw0LjDbt8y=w1600",
+        "durationSec": 5,
+        "order": 3
+      },
+      {
+        "id": "NS04",
+        "board": "BKS",
+        "fullName": "Bùi Thị Thảo",
+        "position": "Trưởng Ban Kiểm soát",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Đại học",
+        "seniority": "",
+        "hotline": "0839.062.825",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+        "durationSec": 5,
+        "order": 4
+      },
+      {
+        "id": "NS05",
+        "board": "BKS",
+        "fullName": "Trịnh Thị Hiền",
+        "position": "Thành viên BKS - Kiểm toán nội bộ",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Đại học Tài chính - Kế toán",
+        "seniority": "",
+        "hotline": "0948.784.333",
+        "avatarUrl": "https://lh3.googleusercontent.com/d/1pShcrycBaT4Wp3-nK3fiKc3mMV495xD4=w1600",
+        "durationSec": 5,
+        "order": 5
+      },
+      {
+        "id": "NS06",
+        "board": "BKS",
+        "fullName": "Vũ Thị Thu",
+        "position": "Kiểm soát viên",
+        "birthYear": "",
+        "partyPosition": "Đảng viên",
+        "degree": "Cử nhân Tài chính - Ngân hàng",
+        "seniority": "",
+        "hotline": "0977.930.527",
+        "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png",
+        "durationSec": 5,
+        "order": 6
+      }
+    ],
+    "promoSlides": [],
+    "imagePosters": [
+      {
+        "id": "ANH01",
+        "title": "Poster Gửi Tiết Kiệm — An tâm tích lũy, Vững bước tương lai",
+        "imageUrl": "https://lh3.googleusercontent.com/d/13nKOtHKL3Ub-mugAghqrkGnN8pWQ19GK=w1600",
+        "effect": "PHAO_HOA",
+        "hasAudio": false,
+        "soundUrl": "",
+        "durationSec": 15,
+        "order": 1
+      },
+      {
+        "id": "ANH02",
+        "title": "Poster Tư Vấn Vay Vốn — Hỗ trợ kịp thời, Phát triển bền vững",
+        "imageUrl": "https://lh3.googleusercontent.com/d/1YepOOvudME0ooP26Qv05qupbwYeL2NlF=w1600",
+        "effect": "CHUC_MUNG",
+        "hasAudio": false,
+        "soundUrl": "",
+        "durationSec": 15,
+        "order": 2
+      },
+      {
+        "id": "ANH03",
+        "title": "Poster Giải Pháp Tài Chính Toàn Diện — Dành cho Thành viên và Khách hàng",
+        "imageUrl": "https://lh3.googleusercontent.com/d/1PzP2_9xLEKzEwsgzzJJYVpmG-Dv5pGIt=w1600",
+        "effect": "HOA_BAY",
+        "hasAudio": false,
+        "soundUrl": "",
+        "durationSec": 15,
+        "order": 3
+      },
+      {
+        "id": "ANH04",
+        "title": "Poster Thông báo lãi suất",
+        "imageUrl": "https://lh3.googleusercontent.com/d/13nKOtHKL3Ub-mugAghqrkGnN8pWQ19GK=w1600",
+        "effect": "CO_DO_SAO_VANG",
+        "hasAudio": false,
+        "soundUrl": "",
+        "durationSec": 15,
+        "order": 4
+      }
+    ],
+    "videoSlides": [],
+    "tickers": [
+      "CHÀO MỪNG QUÝ THÀNH VIÊN VÀ KHÁCH HÀNG ĐẾN GIAO DỊCH TẠI QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ — TRỤ SỞ: THÔN TÂN LỘC, XÃ QUÝ LỘC, TỈNH THANH HOÁ",
+      "THÔNG BÁO: NIÊM YẾT BIỂU LÃI SUẤT TIỀN GỬI TIẾT KIỆM ƯU ĐÃI — CỘNG THÊM TỚI +0,30%/NĂM CHO KHOẢN TIỀN GỬI TỪ 300 TRIỆU ĐỒNG TRỞ LÊN — BẢO HIỂM TIỀN GỬI VIỆT NAM BẢO VỆ 100%",
+      "TRIỂN KHAI GÓI VỐN VAY ƯU ĐÃI PHỤC VỤ SẢN XUẤT NÔNG NGHIỆP, KINH DOANH DỊCH VỤ VÀ ĐỜI SỐNG THÀNH VIÊN TẠI 3 XÃ QUÝ LỘC, VĨNH LỘC, YÊN TRƯỜNG — GIẢI NGÂN NHANH TRONG 24H",
+      "THỜI GIAN GIAO DỊCH: SÁNG 07:15 - 11:30 | CHIỀU 13:45 - 17:30 — ĐIỆN THOẠI: 0237.8770.793 — HOTLINE TƯ VẤN: 0965.122.111 / 0941.562.789"
+    ],
+    "aboutItems": []
+  }
+}

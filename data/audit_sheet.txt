@@ -1,0 +1,125 @@
+=== 1. CẤU HÌNH (TOTAL 77 KEYS) ===
+  - Bật nhạc nền: 'Không'
+  - Chi nhánh ngân hàng: 'Chi nhánh Thanh Hóa'
+  - Chu kỳ kiểm tra cập nhật (phút): '5'
+  - Dòng ghi chú 1 chân trang lãi suất tiền gửi: '🛡️ 100% Tiền gửi tiết kiệm của Quý khách tại Quỹ được Bảo hiểm Tiền gửi Việt Nam bảo vệ toàn diện theo quy định.'
+  - Dòng ghi chú 2 chân trang lãi suất tiền gửi: '✦ Mức lãi suất có thể điều chỉnh linh hoạt theo từng thời kỳ theo quy định của Ngân hàng Nhà nước. Chi tiết liên hệ quầy giao dịch.'
+  - Email: 'qtdyentho@gmail.com'
+  - Ghi chú chân trang lãi suất cho vay: '* Thủ tục đơn giản, giải ngân nhanh chóng trong 24 giờ làm việc. Cán bộ tín dụng hướng dẫn hồ sơ tận nơi.'
+  - Ghi chú chân trang lãi suất tiền gửi: '* Mức lãi suất có thể điều chỉnh linh hoạt theo từng thời kỳ theo quy định của Ngân hàng Nhà nước. Chi tiết liên hệ quầy giao dịch.'
+  - Giờ giao dịch Chiều: 'Chiều: 13:45 - 17:15'
+  - Giờ giao dịch Sáng: 'Sáng: 07:15 - 11:45'
+  - Hotline 1: '0965.122.111'
+  - Hotline 2: '0941.562.789'
+  - Khẩu hiệu: 'Quỹ của mọi nhà, hài hoà lợi ích — An toàn - Hiệu quả - Phát triển bền vững'
+  - Link nhạc nền: ''
+  - Link tải APK: 'https://drive.usercontent.google.com/download?id=1UPF303Cimk7uJmMZt780_FO9kr6RHyd2&export=download&confirm=t'
+  - Link ảnh QR Quỹ: ''
+  - Màu chữ tiêu đề Quỹ: '#FFD54F'
+  - Mã phiên bản APK: '18'
+  - Ngân hàng thụ hưởng: 'Ngân hàng Hợp tác xã Việt Nam (Co-opBank)'
+  - Nhiệm kỳ / Phụ đề BKS: 'Nhiệm kỳ 2022 - 2028'
+  - Nhiệm kỳ / Phụ đề HĐQT: 'Nhiệm kỳ 2022 - 2027'
+  - Nhãn chủ tài khoản Quỹ: 'Chủ tài khoản:'
+  - Nhãn hướng dẫn quét QR: 'Quét mã VietQR nhanh bằng mọi App Ngân hàng hoặc MoMo'
+  - Nhãn ngày áp dụng lãi suất cho vay: 'Áp dụng từ:'
+  - Nhãn ngày áp dụng lãi suất tiền gửi: 'Áp dụng từ:'
+  - Nhãn ngân hàng thụ hưởng: 'Tại ngân hàng:'
+  - Nhãn số tài khoản Quỹ: 'Số tài khoản:'
+  - Nhãn thẻ tài khoản thụ hưởng: 'TÀI KHOẢN THỤ HƯỞNG CHÍNH THỨC CỦA QUỸ'
+  - Phiên bản APK mới nhất: '4.3'
+  - Phụ đề slide chuyển khoản: 'AN TOÀN • CHÍNH XÁC • GẠCH NỢ TỰ ĐỘNG & BẢO MẬT 100%'
+  - Quy tắc chuyển khoản 1: '✦ Hỗ trợ Chữ IN HOA hoặc Chữ in thường KHÔNG DẤU (Ví dụ: TRA LAI HDTD SO... hoặc tra lai hdtd so...). Phân biệt rõ mục đích, người chuyển/nhận/sở hữu trong cú pháp.'
+  - Quy tắc chuyển khoản 2: '✦ Tuyệt đối KHÔNG VIẾT DẤU TIẾNG VIỆT (Tránh lỗi mã hóa hiển thị tên khách hàng/địa chỉ trên ứng dụng Ngân hàng).'
+  - Quy tắc chuyển khoản 3: '✦ KHÔNG DÙNG DẤU CHẤM (.) HOẶC PHẨY (,) trong số tiền (Ví dụ số tiền 100 triệu viết chập liền: 100000000).'
+  - Số tài khoản Quỹ: '3800001234567899'
+  - Thời lượng dừng mỗi thành viên HĐQT/BKS (giây): '5'
+  - Thời lượng slide chuyển khoản (giây): '25'
+  - Thời lượng slide lãi suất cho vay (giây): '20'
+  - Thời lượng slide lãi suất tiền gửi (giây): '22'
+  - Thời lượng slide mặc định (giây): '10'
+  - Thời lượng slide quy mô tài chính (giây): '18'
+  - Thời lượng slide tài chính 5 năm (giây): '20'
+  - Tiêu đề Ban Kiểm soát: '🛡️ BAN KIỂM SOÁT'
+  - Tiêu đề Hội đồng Quản trị: '🏛️ HỘI ĐỒNG QUẢN TRỊ'
+  - Tiêu đề cột LS KH Thành viên: 'KH THÀNH VIÊN (%/NĂM)'
+  - Tiêu đề cột LS KH Thường: 'KH THƯỜNG (%/NĂM)'
+  - Tiêu đề cột cú pháp CK: 'Cú pháp chuyển khoản chuẩn'
+  - Tiêu đề cột ghi chú CK: 'Ghi chú / Hướng dẫn'
+  - Tiêu đề cột ghi chú lãi suất ưu đãi: 'ĐIỀU KIỆN & GHI CHÚ ƯU ĐÃI'
+  - Tiêu đề cột gói vay: 'CHƯƠNG TRÌNH / GÓI VAY TÍN DỤNG'
+  - Tiêu đề cột kỳ hạn gửi: 'KỲ HẠN GỬI TIỀN'
+  - Tiêu đề cột kỳ hạn vay: 'KỲ HẠN VAY'
+  - Tiêu đề cột lãi suất cho vay: 'LÃI SUẤT VAY (%/NĂM)'
+  - Tiêu đề cột lãi suất ngoài thành viên: 'NGOÀI THÀNH VIÊN (%/NĂM)'
+  - Tiêu đề cột lãi suất niêm yết: 'LÃI SUẤT NIÊM YẾT (%/NĂM)'
+  - Tiêu đề cột lãi suất thành viên: 'KH THÀNH VIÊN (%/NĂM)'
+  - Tiêu đề cột lãi suất ưu đãi: 'LÃI SUẤT ƯU ĐÃI (%/NĂM)'
+  - Tiêu đề cột nội dung CK: 'Nội dung giao dịch'
+  - Tiêu đề cột phương thức trả nợ: 'HẠN MỨC & PHƯƠNG THỨC TRẢ NỢ'
+  - Tiêu đề cột quyền lợi tiền gửi: 'QUYỀN LỢI, ƯU ĐÃI'
+  - Tiêu đề hộp quy chuẩn CK: 'QUY CHUẨN KÝ TỰ & ĐỊNH DẠNG HỢP LỆ KHI CHUYỂN KHOẢN'
+  - Tiêu đề hộp ưu đãi tiền gửi: 'QUYỀN LỢI ƯU ĐÃI & BẢO HIỂM TIỀN GỬI DÀNH CHO KHÁCH HÀNG'
+  - Tiêu đề phụ slide lãi suất cho vay: 'TÍN DỤNG NÔNG NGHIỆP • NÔNG THÔN • KINH DOANH • TIÊU DÙNG'
+  - Tiêu đề phụ slide lãi suất tiền gửi: 'TIỀN GỬI TIẾT KIỆM ĐƯỢC BẢO HIỂM TIỀN GỬI VIỆT NAM BẢO VỆ 100%'
+  - Tiêu đề phụ slide tài chính 5 năm: ''
+  - Tiêu đề slide chuyển khoản: 'HƯỚNG DẪN THỰC HIỆN CHUYỂN KHOẢN VÀO TÀI KHOẢN QUỸ'
+  - Tiêu đề slide lãi suất cho vay: 'BIỂU LÃI SUẤT CHO VAY VỐN TÍN DỤNG NIÊM YẾT'
+  - Tiêu đề slide lãi suất tiền gửi: 'BIỂU LÃI SUẤT TIỀN GỬI TIẾT KIỆM NIÊM YẾT'
+  - Tiêu đề slide quy mô tài chính: ''
+  - Tiêu đề slide tài chính 5 năm: ''
+  - Trụ sở chính: 'Thôn Tân Lộc, xã Quý Lộc, tỉnh Thanh Hoá'
+  - Tên Quỹ: 'QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ'
+  - Tên chủ tài khoản Quỹ: 'QUY TIN DUNG NHAN DAN YEN THO'
+  - Tên địa danh thời tiết: 'xã Quý Lộc'
+  - Tọa độ thời tiết (Vĩ độ, Kinh độ): '20.0370, 105.5808'
+  - Âm lượng nhạc nền (%): '30'
+  - Điện thoại bàn: '0237.8770.793'
+  - Địa bàn hoạt động: 'Xã Quý Lộc • Xã Vĩnh Lộc • Xã Yên Trường'
+
+=== 2. HĐQT (3 MEMBERS) ===
+  {"id": "NS01", "board": "HĐQT", "fullName": "Trịnh Đức Anh", "position": "Chủ tịch Hội đồng Quản trị", "birthYear": "", "partyPosition": "Bí thư chi bộ", "degree": "Đại học - TCNH", "seniority": "", "hotline": "0965.122.111", "avatarUrl": "https://lh3.googleusercontent.com/d/10T949Y4NPuj2Xrl9n2L0rDVaSSGZJ0p5=w1600", "durationSec": 5, "order": 1}
+  {"id": "NS02", "board": "HĐQT", "fullName": "Nguyễn Văn Sơn", "position": "Thành viên HĐQT - Giám đốc Quỹ", "birthYear": "", "partyPosition": "Phó bí thư chi bộ", "degree": "Đại học QTKD", "seniority": "", "hotline": "0941.562.789", "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png", "durationSec": 5, "order": 2}
+  {"id": "NS03", "board": "HĐQT", "fullName": "Vũ Thị Hiền", "position": "Thành viên HĐQT - Giám đốc Quỹ", "birthYear": "", "partyPosition": "Chi uỷ viên", "degree": "Đại học", "seniority": "", "hotline": "0983.502.181", "avatarUrl": "https://lh3.googleusercontent.com/d/1hywhFv7U0lejgOnkjyYSOWOw0LjDbt8y=w1600", "durationSec": 5, "order": 3}
+
+=== 3. BKS (3 MEMBERS) ===
+  {"id": "NS04", "board": "BKS", "fullName": "Bùi Thị Thảo", "position": "Trưởng Ban Kiểm soát", "birthYear": "", "partyPosition": "Đảng viên", "degree": "Đại học", "seniority": "", "hotline": "0839.062.825", "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png", "durationSec": 5, "order": 4}
+  {"id": "NS05", "board": "BKS", "fullName": "Trịnh Thị Hiền", "position": "Thành viên BKS - Kiểm toán nội bộ", "birthYear": "", "partyPosition": "Đảng viên", "degree": "Đại học Tài chính - Kế toán", "seniority": "", "hotline": "0948.784.333", "avatarUrl": "https://lh3.googleusercontent.com/d/1pShcrycBaT4Wp3-nK3fiKc3mMV495xD4=w1600", "durationSec": 5, "order": 5}
+  {"id": "NS06", "board": "BKS", "fullName": "Vũ Thị Thu", "position": "Kiểm soát viên", "birthYear": "", "partyPosition": "Đảng viên", "degree": "Cử nhân Tài chính - Ngân hàng", "seniority": "", "hotline": "0977.930.527", "avatarUrl": "https://cdn-icons-png.flaticon.com/512/3135/3135789.png", "durationSec": 5, "order": 6}
+
+=== 4. TRANSFER GUIDE ===
+   accountNo: '3800001234567899'
+   accountName: 'QUY TIN DUNG NHAN DAN YEN THO'
+   bankName: 'Ngân hàng Hợp tác xã Việt Nam (Co-opBank)'
+   branch: 'Chi nhánh Thanh Hóa'
+   qrUrl: ''
+   durationSec: 25
+   items count: 6
+     {"tt": 1, "content": "Trả lãi tiền vay", "syntax": "TRA LAI HDTD SO [SO_HD] [HO_TEN]", "note": "Ví dụ: TRA LAI HDTD SO 123 NGUYEN VAN A (hoặc tra lai hdtd so 123 nguyen van a)", "order": 1}
+     {"tt": 2, "content": "Gửi tiết kiệm", "syntax": "GUI TIET KIEM [SO_SO] [HO_TEN]", "note": "Ví dụ: GUI TIET KIEM 456789 TRAN THI B (hoặc gui tiet kiem 456789 tran thi b)", "order": 2}
+     {"tt": 3, "content": "Trả gốc tiền vay", "syntax": "TRA GOC HDTD SO [SO_HD] [HO_TEN]", "note": "Ví dụ: TRA GOC HDTD SO 123 NGUYEN VAN A (hoặc tra goc hdtd so 123 nguyen van a)", "order": 3}
+     {"tt": 4, "content": "Trả gốc lãi tiền vay", "syntax": "TRA GOC LAI HDTD SO [SO_HD] [HO_TEN]", "note": "Ví dụ: TRA GOC LAI HDTD SO 123 NGUYEN VAN A (hoặc tra goc lai hdtd so 123 nguyen van a)", "order": 4}
+     {"tt": 5, "content": "Tất toán tiền vay", "syntax": "TAT TOAN HDTD SO [SO_HD] [HO_TEN]", "note": "Ví dụ: TAT TOAN HDTD SO 123 NGUYEN VAN A (hoặc tat toan hdtd so 123 nguyen van a)", "order": 5}
+     {"tt": 6, "content": "Chuyển nhận tiền mặt", "syntax": "CHUYEN TIEN MAT CHO [HO_TEN] [CCCD_SDT]", "note": "Ví dụ: CHUYEN TIEN MAT CHO LE VAN C 038089123456 (hoặc sđt 0912345678)", "order": 6}
+
+=== 5. FINANCE 5 YEARS (6 INDICATORS) ===
+   1. Tổng nguồn vốn hoạt động | unit: Tỷ đồng | note: Tăng trưởng bền vững hàng năm | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['185.2', '205.6', '228.4', '246.8', '260']
+   2. Vốn huy động tiền gửi | unit: Tỷ đồng | note: Nguồn vốn huy động dân cư vững chắc | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['165', '183.5', '204.2', '221.5', '235']
+   3. Dư nợ cho vay thành viên | unit: Tỷ đồng | note: Hỗ trợ phát triển sản xuất kinh doanh địa phương | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['152', '169.4', '188.7', '205.3', '218']
+   4. Vốn điều lệ | unit: Tỷ đồng | note: Năng lực tài chính tự chủ vững mạnh | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['11.5', '12.2', '13.4', '14.2', '15']
+   5. Tỷ lệ nợ xấu trên tổng dư nợ | unit: % | note: Kiểm soát an toàn tuyệt đối (dưới 0,30%) | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['0.0028', '0.0025', '0.0022', '0.002', '< 0,30%']
+   6. Tổng số thành viên tham gia Quỹ | unit: Thành viên | note: Uy tín lan tỏa rộng khắp 3 xã | years: ['2022', '2023', '2024', '2025', '2026 (KH)'] | values: ['1620', '1685', '1740', '1802', '1850']
+
+=== 6. RATE TABLES (1 TABLES) ===
+   Table: None | sub: None | items: 0
+
+=== 7. LOAN RATES (4 ITEMS) ===
+   {"id": "VAY01", "loanType": "Cho vay Nông nghiệp & Nông thôn", "term": "Ngắn hạn (≤ 12 tháng)", "rate": "0.072", "rateMember": "0.072", "rateStandard": "0.072", "limitNote": "Hộ gia đình trồng trọt, chăn nuôi, vật tư nông nghiệp", "repaymentMethod": "Lãi trả hàng tháng, gốc trả cuối kỳ", "disbursementSpeed": "Trong 24 giờ làm việc", "applyDate": "01/07/2026", "durationSec": 20, "order": 1}
+   {"id": "VAY02", "loanType": "Cho vay Sản xuất & Kinh doanh Dịch vụ", "term": "Ngắn hạn (≤ 12 tháng)", "rate": "0.075", "rateMember": "0.075", "rateStandard": "0.075", "limitNote": "Hộ kinh doanh cá thể, buôn bán thương mại, dịch vụ", "repaymentMethod": "Lãi trả hàng tháng, gốc trả phân kỳ linh hoạt", "disbursementSpeed": "Trong 24 giờ làm việc", "applyDate": "01/07/2026", "durationSec": 20, "order": 2}
+   {"id": "VAY03", "loanType": "Cho vay Tiêu dùng & Đời sống Thành viên", "term": "Trung hạn (12 - 36 tháng)", "rate": "0.082", "rateMember": "0.082", "rateStandard": "0.082", "limitNote": "Mua sắm thiết bị, đồ gia dụng, phương tiện sinh hoạt", "repaymentMethod": "Gốc lãi trả đều hàng tháng", "disbursementSpeed": "Trong 24 giờ làm việc", "applyDate": "01/07/2026", "durationSec": 20, "order": 3}
+   {"id": "VAY04", "loanType": "Cho vay Xây dựng, Sửa chữa Nhà ở", "term": "Trung - Dài hạn (≤ 60 tháng)", "rate": "0.085", "rateMember": "0.085", "rateStandard": "0.085", "limitNote": "Xây mới, tôn tạo, nâng cấp công trình nhà ở kiên cố", "repaymentMethod": "Lãi trả hàng tháng, gốc trả định kỳ theo tiến độ", "disbursementSpeed": "Trong 48 giờ làm việc", "applyDate": "01/07/2026", "durationSec": 20, "order": 4}
+
+=== 8. POSTERS & VIDEOS ===
+   Image posters: 4
+   Video slides: 0
+   Tickers count: 4

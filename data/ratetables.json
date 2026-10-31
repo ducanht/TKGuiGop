@@ -1,0 +1,65 @@
+[
+  {
+    "productType": "1. Tiết kiệm có kỳ hạn - Trả lãi cuối kỳ",
+    "applyDate": "01/07/2026",
+    "durationSec": 22,
+    "rows": [
+      {
+        "term": "Không kỳ hạn",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Gửi rút linh hoạt các ngày làm việc tại quầy",
+        "order": 1
+      },
+      {
+        "term": "01 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Áp dụng món gửi từ 100 triệu đồng trở lên",
+        "order": 2
+      },
+      {
+        "term": "02 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Áp dụng món gửi từ 100 triệu đồng trở lên",
+        "order": 3
+      },
+      {
+        "term": "03 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Kỳ hạn phổ thông, quay vòng vốn linh hoạt",
+        "order": 4
+      },
+      {
+        "term": "06 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Tặng quà tri ân thành viên gửi tiết kiệm",
+        "order": 5
+      },
+      {
+        "term": "09 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Tặng quà tri ân thành viên gửi tiết kiệm",
+        "order": 6
+      },
+      {
+        "term": "12 tháng ★",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Kỳ hạn ưu đãi đặc biệt cho Thành viên Quỹ",
+        "order": 7
+      },
+      {
+        "term": "18 - 24 tháng",
+        "rateMember": "",
+        "rateStandard": "",
+        "preferentialNote": "Lãi suất lũy tiến, sinh lời tối đa",
+        "order": 8
+      }
+    ]
+  }
+]

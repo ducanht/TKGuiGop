@@ -1,0 +1,371 @@
+// ============================================================================
+// HỆ THỐNG BẢNG TIN SỐ & TRÌNH CHIẾU TV (DIGITAL SIGNAGE v3.9 PRO) - QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ
+// Tệp: Payload.js - Tổng hợp Dữ liệu Tinh gọn & Cache Payload cho Android TV
+// ============================================================================
+
+function getSignagePayload_(forceRefresh) {
+  const cache = CacheService.getScriptCache();
+  if (!forceRefresh) {
+    const cached = cache.get(CACHE_KEY_PAYLOAD);
+    if (cached) {
+      try {
+        return JSON.parse(cached);
+      } catch (e) {}
+    }
+  }
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss.getSheetByName(SHEET_CONFIG)) {
+    setupSheets();
+  }
+
+  // 1. Đọc CẤU HÌNH
+  const configRows = sheetToObjects_(ss.getSheetByName(SHEET_CONFIG));
+  const config = {};
+  configRows.forEach(r => {
+    const k = String(r["Tham số cấu hình"] || "").trim();
+    const v = r["Giá trị thiết lập"];
+    if (k) config[k] = v !== undefined && v !== null ? String(v).trim() : "";
+  });
+
+  // 2. Đọc TÀI CHÍNH 5 NĂM (Quét động mọi cột năm & tính giai đoạn)
+  let sheetFin5y = ss.getSheetByName(SHEET_FINANCE_5Y);
+  const rawFin5y = sheetFin5y ? sheetToObjects_(sheetFin5y) : [];
+  const finance5Years = [];
+
+  // Tự động tìm tất cả các cột Năm từ tiêu đề của sheet TÀI CHÍNH 5 NĂM
+  const yearCols = [];
+  if (rawFin5y.length > 0) {
+    const sample = rawFin5y[0];
+    Object.keys(sample).forEach(k => {
+      const match = k.match(/(?:Năm\s*)?(\d{4})/i);
+      if (match) {
+        const y = parseInt(match[1], 10);
+        if (y >= 2000 && y < 2100) {
+          let lbl = k.replace(/^Năm\s*/i, '').trim();
+          if (lbl.includes("Kế hoạch") || lbl.includes("Ước đạt")) {
+            lbl = y + " (KH)";
+          }
+          if (!yearCols.some(item => item.year === y)) {
+            yearCols.push({ year: y, key: k, label: lbl });
+          }
+        }
+      }
+    });
+    yearCols.sort((a, b) => a.year - b.year);
+  }
+
+  const detectedLatestYear = yearCols.length > 0 ? yearCols[yearCols.length - 1].year : 2026;
+  const minYear = yearCols.length > 0 ? yearCols[0].year : 2022;
+  const detectedPeriod = minYear === detectedLatestYear ? ("Năm " + minYear) : (minYear + " - " + detectedLatestYear);
+
+  rawFin5y.forEach(r => {
+    const status = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (status !== "HIỂN THỊ" && status !== "ÁP DỤNG" && status !== "CÓ") return;
+
+    const ind = String(r["Chỉ tiêu tài chính"] || r["Chỉ tiêu"] || "").trim();
+    if (!ind || ind.indexOf("[HƯỚNG DẪN") !== -1) return;
+
+    const yearList = [];
+    const yearLabels = [];
+    const yearValues = [];
+    yearCols.forEach(col => {
+      const val = findYearValueInRow_(r, col.year) || String(r[col.key] || "").trim();
+      yearList.push({ year: String(col.year), label: col.label, value: val });
+      yearLabels.push(col.label);
+      yearValues.push(val);
+    });
+
+    const latestVal = yearValues.length > 0 ? yearValues[yearValues.length - 1] : "";
+
+    finance5Years.push({
+      indicator: ind,
+      years: yearList,
+      yearLabels: yearLabels,
+      yearValues: yearValues,
+      latestYearValue: latestVal,
+      latestYear: detectedLatestYear,
+      minYear: minYear,
+      period: detectedPeriod,
+      y2022: yearList.length > 0 ? yearList[0].value : "",
+      y2023: yearList.length > 1 ? yearList[1].value : "",
+      y2024: yearList.length > 2 ? yearList[2].value : "",
+      y2025: yearList.length > 3 ? yearList[3].value : "",
+      y2026: latestVal,
+      unit: String(r["Đơn vị tính"] || r["Đơn vị"] || "").trim(),
+      note: String(r["Ghi chú / Đánh giá"] || r["Ghi chú"] || "").trim(),
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    });
+  });
+  finance5Years.sort((a, b) => a.order - b.order);
+
+  // 3. Đọc NHÂN SỰ & TÁCH RIÊNG HĐQT VÀ BKS THÀNH 2 DANH SÁCH ĐỘC LẬP
+  const rawLeaders = sheetToObjects_(ss.getSheetByName(SHEET_LEADERS)).filter(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    return st === "HIỂN THỊ" || st === "CÓ";
+  });
+  const defaultMemberDur = parseInt(config["Thời lượng dừng mỗi thành viên HĐQT/BKS (giây)"] || config["Thời lượng slide nhân sự từng người (giây)"] || "5", 10) || 5;
+  const leaders = rawLeaders.map(r => {
+    const customMemDur = parseInt(r["Thời lượng (giây)"] || "0", 10);
+    return {
+      id: String(r["Mã NS"] || ""),
+      board: String(r["Ban"] || "HĐQT").trim().toUpperCase(),
+      fullName: String(r["Họ và tên"] || "").trim(),
+      position: String(r["Chức vụ"] || "").trim(),
+      birthYear: String(r["Năm sinh"] || "").trim(),
+      partyPosition: String(r["Chức vụ Đảng"] || "").trim(),
+      degree: String(r["Trình độ chuyên môn"] || "").trim(),
+      seniority: String(r["Thâm niên công tác"] || r["Thâm niên"] || "").trim(),
+      hotline: String(r["Hotline"] || "").trim(),
+      avatarUrl: normalizeDriveImageUrl_(r["Ảnh URL (Google Drive)"]),
+      durationSec: customMemDur > 0 ? customMemDur : defaultMemberDur,
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    };
+  }).filter(x => x.fullName !== "" && x.fullName.indexOf("[HƯỚNG DẪN") === -1);
+  leaders.sort((a, b) => a.order - b.order);
+
+  const boardDirectors = leaders.filter(p => !p.board.includes("BKS") && !p.board.includes("KIỂM SOÁT"));
+  const supervisoryBoard = leaders.filter(p => p.board.includes("BKS") || p.board.includes("KIỂM SOÁT"));
+
+  // 4. Đọc ẢNH TRÌNH CHIẾU
+  const rawPosters = sheetToObjects_(ss.getSheetByName(SHEET_IMAGE_POSTERS));
+  const imagePosters = [];
+  rawPosters.forEach(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    if (!isWithinSchedule_(r["Từ ngày"], r["Đến ngày"])) return;
+    const rawLink = String(r["Link ảnh Google Drive"] || "").trim();
+    if (!rawLink || rawLink.indexOf("[HƯỚNG DẪN") !== -1) return;
+
+    const audioVal = String(r["Âm thanh hiệu ứng"] || r["Bật âm thanh"] || r["Âm thanh"] || "Không").trim().toUpperCase();
+    const rawSound = String(r["Link âm thanh hiệu ứng (Google Drive / URL)"] || r["Link âm thanh"] || "").trim();
+    const soundUrl = normalizeDriveAudioUrl_(rawSound);
+    const hasAudio = (audioVal === "CÓ" || audioVal === "BẬT" || audioVal === "YES" || audioVal === "TRUE" || audioVal === "1") || Boolean(soundUrl);
+    const customDur = parseInt(r["Thời lượng (giây)"] || "0", 10);
+    const defaultDur = parseInt(config["Thời lượng slide mặc định (giây)"] || "15", 10) || 15;
+    const durationSec = customDur > 0 ? customDur : defaultDur;
+
+    imagePosters.push({
+      id: String(r["Mã ảnh"] || ""),
+      title: String(r["Tên / Ghi chú ảnh"] || "").trim(),
+      imageUrl: normalizeDriveImageUrl_(rawLink),
+      effect: String(r["Hiệu ứng động"] || "GIU_NGUYEN").trim().toUpperCase(),
+      hasAudio: hasAudio,
+      soundUrl: soundUrl,
+      durationSec: durationSec,
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    });
+  });
+  imagePosters.sort((a, b) => a.order - b.order);
+
+  // 5. Đọc VIDEO TRÌNH CHIẾU
+  let sheetVideos = ss.getSheetByName(SHEET_VIDEOS);
+  const rawVideos = sheetVideos ? sheetToObjects_(sheetVideos) : [];
+  const videoSlides = [];
+  rawVideos.forEach(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    if (!isWithinSchedule_(r["Từ ngày"], r["Đến ngày"])) return;
+
+    const rawLink = String(r["Link video (Google Drive)"] || r["Link video"] || "").trim();
+    if (!rawLink || rawLink.indexOf("[HƯỚNG DẪN") !== -1) return;
+
+    const streamUrl = normalizeDriveVideoUrl_(rawLink);
+    if (!streamUrl) return;
+
+    const soundVal = String(r["Bật âm thanh"] || "Không").trim().toLowerCase();
+    const hasAudio = /^(có|yes|true|1|bật)$/i.test(soundVal);
+    const durationSec = parseInt(r["Thời lượng phát (giây)"] || r["Thời lượng (giây)"] || "0", 10) || 0;
+
+    videoSlides.push({
+      id: String(r["Mã video"] || ""),
+      title: String(r["Tiêu đề video / Chương trình"] || r["Tiêu đề"] || "").trim(),
+      videoUrl: streamUrl,
+      durationSec: durationSec,
+      hasAudio: hasAudio,
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    });
+  });
+  videoSlides.sort((a, b) => a.order - b.order);
+
+  // 6. Đọc BIỂU LÃI SUẤT TIỀN GỬI TIẾT KIỆM (Gom nhóm theo Loại sản phẩm)
+  const sheetRates = ss.getSheetByName(SHEET_RATES) || ss.getSheetByName("LÃI SUẤT");
+  const rawRates = sheetRates ? sheetToObjects_(sheetRates) : [];
+  const rateTablesMap = {};
+  rawRates.forEach(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    const pType = String(r["Loại sản phẩm"] || r["Sản phẩm"] || "1. Tiết kiệm có kỳ hạn - Trả lãi cuối kỳ").trim();
+    if (!rateTablesMap[pType]) {
+      rateTablesMap[pType] = {
+        productType: pType,
+        applyDate: formatDateVN_(r["Ngày áp dụng"] || ""),
+        durationSec: parseInt(r["Thời lượng (giây)"] || r["Thời lượng"] || config["Thời lượng slide lãi suất tiền gửi (giây)"] || "22", 10) || 22,
+        rows: []
+      };
+    }
+    const term = String(r["Kỳ hạn"] || "").trim();
+    if (!term || term.indexOf("[HƯỚNG DẪN") !== -1) return;
+    const rMember = String(r["Lãi suất KH Thành viên (%/năm)"] || r["Lãi suất ưu đãi (%/năm)"] || r["Lãi suất ưu đãi"] || r["KH Thành viên"] || "").trim();
+    const rStandard = String(r["Lãi suất KH Thường (%/năm)"] || r["Lãi suất (%/năm)"] || r["Lãi suất"] || r["Lãi suất niêm yết"] || r["KH Thường"] || "").trim();
+    const rNote = String(r["Ghi chú ưu đãi"] || r["Ghi chú lãi suất ưu đãi"] || r["Ghi chú / Ưu đãi"] || r["Ghi chú"] || "").trim();
+
+    rateTablesMap[pType].rows.push({
+      term: term,
+      rateMember: rMember,
+      rateStandard: rStandard,
+      preferentialNote: rNote,
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    });
+  });
+  const rateTables = [];
+  Object.keys(rateTablesMap).forEach(k => {
+    const group = rateTablesMap[k];
+    group.rows.sort((a, b) => a.order - b.order);
+    rateTables.push(group);
+  });
+
+  // 7. Đọc BIỂU LÃI SUẤT CHO VAY (Tín dụng nông nghiệp, sản xuất kinh doanh, tiêu dùng - 1 cột lãi suất duy nhất)
+  const sheetLoans = ss.getSheetByName(SHEET_LOANS);
+  const rawLoans = sheetLoans ? sheetToObjects_(sheetLoans) : [];
+  const loanRates = [];
+  rawLoans.forEach(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    const lType = String(r["Loại sản phẩm"] || r["Tên gói vay"] || "").trim();
+    if (!lType || lType.indexOf("[HƯỚNG DẪN") !== -1) return;
+    const singleRate = String(r["Lãi suất (%/năm)"] || r["Lãi suất"] || r["Lãi suất vay"] || r["Lãi suất KH Thành viên (%/năm)"] || r["KH Thành viên"] || "").trim();
+    loanRates.push({
+      id: String(r["Mã gói vay"] || r["Mã"] || ""),
+      loanType: lType,
+      term: String(r["Kỳ hạn vay"] || r["Kỳ hạn"] || "").trim(),
+      rate: singleRate,
+      rateMember: singleRate,
+      rateStandard: singleRate,
+      limitNote: String(r["Hạn mức / Đối tượng"] || r["Hạn mức"] || "").trim(),
+      repaymentMethod: String(r["Phương thức trả nợ"] || "").trim(),
+      disbursementSpeed: String(r["Thời gian giải ngân"] || "").trim(),
+      applyDate: formatDateVN_(r["Ngày áp dụng"] || ""),
+      durationSec: parseInt(r["Thời lượng (giây)"] || r["Thời lượng"] || config["Thời lượng slide lãi suất cho vay (giây)"] || "20", 10) || 20,
+      order: parseInt(r["Thứ tự"] || "99", 10) || 99
+    });
+  });
+  loanRates.sort((a, b) => a.order - b.order);
+
+  // 8. Đọc HƯỚNG DẪN CHUYỂN KHOẢN (Sheet CHUYỂN KHOẢN)
+  const sheetTransfer = ss.getSheetByName(SHEET_TRANSFER_GUIDE);
+  const rawTransfers = sheetTransfer ? sheetToObjects_(sheetTransfer) : [];
+  const transferItems = [];
+  rawTransfers.forEach((r, idx) => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    const isVisible = String(r["Hiển thị"] || "Có").trim().toLowerCase();
+    if (isVisible === "không" || isVisible === "no" || isVisible === "0" || isVisible === "false") return;
+    const content = String(r["Nội dung"] || "").trim();
+    if (!content || content.indexOf("[HƯỚNG DẪN") !== -1) return;
+    transferItems.push({
+      tt: parseInt(r["TT"] || (idx + 1), 10) || (idx + 1),
+      content: content,
+      syntax: String(r["Cú pháp"] || "").trim(),
+      note: String(r["Ghi chú"] || "").trim(),
+      order: parseInt(r["Thứ tự"] || (idx + 1), 10) || (idx + 1)
+    });
+  });
+  transferItems.sort((a, b) => a.order - b.order);
+
+  // Link ảnh QR Quỹ: hỗ trợ link Google Drive tự động chuyển sang lh3 direct image
+  let rawQrUrl = String(config["Link ảnh QR Quỹ"] || config["Link ảnh QR tài khoản Quỹ"] || "").trim();
+  const qrUrl = normalizeDriveImageUrl_(rawQrUrl);
+
+  const transferGuide = {
+    accountNo: String(config["Số tài khoản Quỹ"] || "3800001234567899").trim(),
+    accountName: String(config["Tên chủ tài khoản Quỹ"] || "QUY TIN DUNG NHAN DAN YEN THO").trim(),
+    bankName: String(config["Ngân hàng thụ hưởng"] || "Ngân hàng Hợp tác xã Việt Nam (Co-opBank)").trim(),
+    branch: String(config["Chi nhánh ngân hàng"] || "Chi nhánh Thanh Hóa").trim(),
+    qrUrl: qrUrl,
+    durationSec: parseInt(config["Thời lượng slide chuyển khoản (giây)"] || "25", 10) || 25,
+    items: transferItems
+  };
+
+  // 9. Đọc THÔNG BÁO (Chữ chạy chân trang)
+  const rawTickers = sheetToObjects_(ss.getSheetByName(SHEET_TICKER));
+  const tickers = [];
+  rawTickers.forEach(r => {
+    const st = String(r["Trạng thái"] || "Hiển thị").trim().toUpperCase();
+    if (st !== "HIỂN THỊ" && st !== "CÓ") return;
+    if (!isWithinSchedule_(r["Từ ngày"], r["Đến ngày"])) return;
+    const content = String(r["Nội dung thông báo (Chữ chạy chân màn hình TV)"] || "").trim();
+    if (content && content.indexOf("[HƯỚNG DẪN") === -1) {
+      tickers.push({
+        id: String(r["Mã TB"] || ""),
+        text: content,
+        order: parseInt(r["Thứ tự"] || "99", 10) || 99
+      });
+    }
+  });
+  tickers.sort((a, b) => a.order - b.order);
+
+  // 10. Cấu hình Nhạc nền BGM
+  const bgmVal = String(config["Bật nhạc nền"] || "Không").trim().toLowerCase();
+  const bgmEnabled = /^(có|yes|true|1|bật)$/i.test(bgmVal);
+  const bgmRawUrl = String(config["Link nhạc nền"] || "").trim();
+  const bgmUrl = normalizeDriveAudioUrl_(bgmRawUrl);
+  const bgmVol = parseInt(config["Âm lượng nhạc nền (%)"] || "30", 10) || 30;
+
+  const bgm = {
+    enabled: bgmEnabled && Boolean(bgmUrl),
+    url: bgmUrl,
+    volumePercent: Math.max(10, Math.min(100, bgmVol))
+  };
+
+  const payload = {
+    config: config,
+    bgm: bgm,
+    appUpdate: {
+      latestVersionName: (() => {
+        let v = String(config["Phiên bản APK mới nhất"] || config["Phiên bản APK"] || "4.1").trim();
+        if (v.indexOf("GMT") !== -1 || v.indexOf("Jan") !== -1 || !v) return "4.1";
+        return v;
+      })(),
+      latestVersionCode: parseInt(config["Mã phiên bản APK"] || config["Mã phiên bản"] || "15", 10) || 15,
+      apkUrl: config["Link tải APK"] || config["Link tải APK trực tiếp"] || "",
+      mandatory: /^(có|yes|true|1)$/i.test(String(config["Bắt buộc cập nhật"] || "").trim()),
+      releaseNotes: config["Ghi chú cập nhật"] || "Bản phát hành v4.1: Tối ưu phân trang chuyển khoản & Biểu lãi suất tiết kiệm 4 kỳ hạn kèm Hộp ưu đãi"
+    },
+    rateTables: rateTables,
+    loanRates: loanRates,
+    transferGuide: transferGuide,
+    finance: null,
+    finance5Years: finance5Years,
+    fin5yPeriod: detectedPeriod,
+    fin5yMinYear: minYear,
+    fin5yMaxYear: detectedLatestYear,
+    boardDirectors: boardDirectors,
+    supervisoryBoard: supervisoryBoard,
+    leaders: leaders,
+    promoSlides: [],
+    imagePosters: imagePosters,
+    videoSlides: videoSlides,
+    tickers: tickers.map(t => t.text),
+    aboutItems: []
+  };
+
+  try {
+    cache.put(CACHE_KEY_PAYLOAD, JSON.stringify(payload), 3600);
+  } catch (e) {}
+
+  return payload;
+}
+
+function findYearValueInRow_(r, year) {
+  const yStr = String(year);
+  for (let k in r) {
+    if (k.indexOf(yStr) !== -1) {
+      const val = r[k];
+      if (val !== undefined && val !== null && String(val).trim() !== "") {
+        return String(val).trim();
+      }
+    }
+  }
+  return "";
+}

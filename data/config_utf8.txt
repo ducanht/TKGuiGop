@@ -1,0 +1,17 @@
+// ============================================================================
+// HỆ THỐNG BẢNG TIN SỐ & TRÌNH CHIẾU TV (DIGITAL SIGNAGE v3.9 PRO) - QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ
+// Tệp: Config.js - Định nghĩa Hằng số, Danh mục Sheets Hoạt động & Cache Keys
+// ============================================================================
+
+const SHEET_CONFIG = "CẤU HÌNH";
+const SHEET_FINANCE_5Y = "TÀI CHÍNH 5 NĂM";
+const SHEET_VIDEOS = "VIDEO TRÌNH CHIẾU";
+const SHEET_LEADERS = "NHÂN SỰ";
+const SHEET_IMAGE_POSTERS = "ẢNH TRÌNH CHIẾU";
+const SHEET_TICKER = "THÔNG BÁO";
+const SHEET_RATES = "LÃI SUẤT TIỀN GỬI";
+const SHEET_LOANS = "LÃI SUẤT CHO VAY";
+const SHEET_TRANSFER_GUIDE = "CHUYỂN KHOẢN";
+
+const CACHE_KEY_PAYLOAD = "QTD_TV_SIGNAGE_PAYLOAD_V41";
+const PROP_KEY_VERSION = "QTD_TV_DATA_VERSION";

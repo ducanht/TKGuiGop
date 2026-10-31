@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Tính Lãi & In Bảng Minh Họa Tiết Kiệm Gửi Góp - QTDND Yên Thọ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Định dạng chuẩn khi in ấn ra giấy A4 tại quầy */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                font-size: 11pt;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-flex {
+                display: flex !important;
+            }
+            .print-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            .print-table th, .print-table td {
+                border: 1px solid #334155 !important;
+                padding: 5px 6px !important;
+                font-size: 9.5pt !important;
+            }
+            .print-input {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                font-weight: 600 !important;
+                color: #000 !important;
+                width: auto !important;
+                text-align: inherit;
+            }
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none !important;
+            }
+        }
+
+        .print-only {
+            display: none;
+        }
+        .print-flex {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- HEADER ĐIỀU KHIỂN (Ẩn khi in) -->
+    <header class="bg-emerald-900 text-white shadow-lg no-print sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-amber-400 text-emerald-950 flex items-center justify-center font-extrabold text-xl shadow-inner">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-emerald-800 text-amber-300 rounded-md border border-emerald-700">QTDND Yên Thọ</span>
+                        <span class="text-xs text-emerald-200 hidden sm:inline">Chuẩn Thông tư 14/2017/TT-NHNN (365 ngày)</span>
+                    </div>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight mt-0.5">Máy Tính Tiền Lãi & Minh Họa Tiết Kiệm Gửi Góp</h1>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <button onclick="openPledgeModal()" class="px-3.5 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-emerald-100 font-medium text-sm border border-emerald-600 transition flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-scale-balanced text-amber-400"></i>
+                    <span>So sánh Rút trước hạn & Vay cầm cố</span>
+                </button>
+                <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-sm transition flex items-center gap-2 shadow-md">
+                    <i class="fa-solid fa-print"></i>
+                    <span>In Bảng Minh Họa (A4)</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- THÔNG BÁO TOAST NHỎ GỌN -->
+    <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden no-print">
+        <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 text-sm">
+            <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+            <span id="toastText">Đã cập nhật kịch bản tính lãi!</span>
+        </div>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- CỘT TRÁI: NHẬP THAM SỐ & KỊCH BẢN (Ẩn khi in) -->
+            <aside class="lg:col-span-4 space-y-5 no-print">
+
+                <!-- Khối 1: Thông tin khách hàng (để in lên phiếu) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-100">
+                        <h2 class="font-bold text-slate-800 flex items-center gap-2 text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-user-check text-emerald-600"></i>
+                            1. Thông tin khách hàng
+                        </h2>
+                        <button onclick="resetCustomerInfo()" class="text-xs text-slate-400 hover:text-emerald-600 transition">Xóa trống</button>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Họ và tên người gửi tiền</label>
+                            <input type="text" id="custName" value="Nguyễn Thị Hoa" oninput="syncPrintHeader()" placeholder="Nhập họ tên khách hàng..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Số điện thoại</label>
+                                <input type="text" id="custPhone" value="0988.xxx.xxx" oninput="syncPrintHeader()" placeholder="SĐT..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Mã TV / Số CCCD</label>
+                                <input type="text" id="custCode" value="038185xxxxxx" oninput="syncPrintHeader()" placeholder="CCCD/Mã CIF..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Địa chỉ / Thôn xóm</label>
+                            <input type="text" id="custAddress" value="Xã Yên Thọ, Thanh Hóa" oninput="syncPrintHeader()" placeholder="Thôn/Xóm, Xã..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khối 2: Tham số sản phẩm gửi góp -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-100">
+                        <h2 class="font-bold text-slate-800 flex items-center gap-2 text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-sliders text-emerald-600"></i>
+                            2. Tham số gửi góp định kỳ
+                        </h2>
+                        <span class="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">VND</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Chọn kỳ hạn gửi -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Kỳ hạn đăng ký & Biểu lãi suất niêm yết</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button type="button" onclick="selectTerm(6, 4.6, 5.2, 4.2)" id="termBtn_6" class="term-btn py-2 px-1 rounded-xl border text-center transition">
+                                    <div class="text-xs font-bold">6 Tháng</div>
+                                    <div class="text-[11px] opacity-80">4,6%/năm</div>
+                                </button>
+                                <button type="button" onclick="selectTerm(12, 5.5, 6.0, 5.2)" id="termBtn_12" class="term-btn py-2 px-1 rounded-xl border text-center transition">
+                                    <div class="text-xs font-bold">12 Tháng</div>
+                                    <div class="text-[11px] opacity-80">5,5%/năm</div>
+                                </button>
+                                <button type="button" onclick="selectTerm(18, 5.7, 6.2, 5.6)" id="termBtn_18" class="term-btn py-2 px-1 rounded-xl border text-center transition">
+                                    <div class="text-xs font-bold">18 Tháng</div>
+                                    <div class="text-[11px] opacity-80">5,7%/năm</div>
+                                </button>
+                                <button type="button" onclick="selectTerm(24, 6.0, 6.4, 6.0)" id="termBtn_24" class="term-btn py-2 px-1 rounded-xl border text-center transition">
+                                    <div class="text-xs font-bold">24 Tháng</div>
+                                    <div class="text-[11px] opacity-80">6,0%/năm</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Định mức nộp hàng tháng -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs font-semibold text-slate-600">Số tiền gửi định kỳ mỗi tháng (VNĐ)</label>
+                                <span id="amountTextHint" class="text-[11px] font-semibold text-emerald-700">2 triệu đồng / tháng</span>
+                            </div>
+                            <div class="relative">
+                                <input type="text" inputmode="numeric" id="monthlyAmount" value="2.000.000" oninput="handleMoneyInput(this); onParameterChange();" class="w-full px-3.5 py-2.5 text-base font-bold text-slate-900 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none pr-16">
+                                <span class="absolute right-3.5 top-2.5 text-xs font-bold text-slate-400">đ/tháng</span>
+                            </div>
+                            <!-- Nút chọn nhanh mệnh giá -->
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <button type="button" onclick="setQuickAmount(500000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">500.000</button>
+                                <button type="button" onclick="setQuickAmount(1000000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">1.000.000</button>
+                                <button type="button" onclick="setQuickAmount(2000000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">2.000.000</button>
+                                <button type="button" onclick="setQuickAmount(3000000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">3.000.000</button>
+                                <button type="button" onclick="setQuickAmount(5000000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">5.000.000</button>
+                                <button type="button" onclick="setQuickAmount(10000000)" class="px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg border border-slate-200 transition">10.000.000</button>
+                            </div>
+                        </div>
+
+                        <!-- Lãi suất gửi góp & 2 Mức lãi suất tham chiếu so sánh -->
+                        <div class="grid grid-cols-3 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-emerald-800 mb-1" title="Lãi suất áp dụng cho sổ gửi góp">LS Gửi góp (%/năm)</label>
+                                <input type="number" id="interestRate" value="5.5" step="0.1" min="0.1" max="20" oninput="recalculateFromTable()" class="w-full px-2.5 py-2 text-sm font-bold text-emerald-800 bg-emerald-50/70 rounded-xl border border-emerald-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label id="lblAvgTermRate" class="block text-[11px] font-semibold text-blue-800 mb-1" title="Lãi suất tiết kiệm thông thường của kỳ hạn gần nhất với kỳ hạn vốn bình quân (VD: 6-7 tháng)">LS kỳ 6-7T (%/năm)</label>
+                                <input type="number" id="refAvgTermRate" value="5.2" step="0.1" min="0.1" max="20" oninput="recalculateFromTable()" class="w-full px-2.5 py-2 text-sm font-semibold text-blue-800 bg-blue-50/50 rounded-xl border border-blue-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label id="lblSameTermRate" class="block text-[11px] font-semibold text-slate-600 mb-1" title="Lãi suất tiết kiệm thông thường trả lãi cuối kỳ cùng kỳ hạn đăng ký">LS kỳ 12T (%/năm)</label>
+                                <input type="number" id="refStandardRate" value="6.0" step="0.1" min="0.1" max="20" oninput="recalculateFromTable()" class="w-full px-2.5 py-2 text-sm font-semibold text-slate-700 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Ngày mở sổ & Ngày nộp định kỳ -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày mở sổ (Kỳ 1)</label>
+                                <input type="date" id="startDate" onchange="onParameterChange()" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày nộp định kỳ</label>
+                                <select id="depositDayRule" onchange="onParameterChange()" class="w-full px-2.5 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
+                                    <option value="same">Trùng ngày mở sổ</option>
+                                    <option value="1">Ngày 01 hàng tháng</option>
+                                    <option value="5">Ngày 05 hàng tháng</option>
+                                    <option value="10">Ngày 10 hàng tháng</option>
+                                    <option value="15">Ngày 15 hàng tháng</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tùy chọn tự động dời ngày nghỉ cuối tuần -->
+                        <div class="pt-1">
+                            <label class="flex items-start gap-2.5 cursor-pointer select-none">
+                                <input type="checkbox" id="shiftWeekend" checked onchange="onParameterChange()" class="mt-0.5 w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
+                                <span class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>Tự động dời ngày nghỉ cuối tuần:</strong> Nếu ngày nộp định kỳ rơi vào Thứ Bảy/Chủ Nhật thì chuyển sang Thứ Hai liền kề (theo Khoản 1 Điều 4 Quy định).
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khối 3: Mô phỏng nhanh các kịch bản thực tế tại quầy -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                    <h2 class="font-bold text-slate-800 flex items-center gap-2 text-sm uppercase tracking-wider mb-2.5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i>
+                        3. Mô phỏng tình huống thực tế
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-3">Bấm để minh họa nhanh cho khách hàng thấy cách phần mềm tính lãi khi nộp trễ, nộp bù hoặc dừng nộp:</p>
+                    <div class="space-y-2">
+                        <button type="button" onclick="applyScenario('standard')" class="w-full text-left px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition flex items-center justify-between group">
+                            <div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-emerald-800">1. Kịch bản chuẩn (Nộp đúng hạn 100%)</div>
+                                <div class="text-[11px] text-slate-500">Khách hàng nộp đều đặn đủ các tháng theo lịch</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-emerald-600"></i>
+                        </button>
+
+                        <button type="button" onclick="applyScenario('skipAndDouble')" class="w-full text-left px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/50 transition flex items-center justify-between group">
+                            <div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-amber-800">2. Quên nộp Kỳ 4, nộp dồn gấp đôi ở Kỳ 5</div>
+                                <div class="text-[11px] text-slate-500">Minh họa quy tắc không tính lãi hồi tố tháng nộp bù</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-amber-600"></i>
+                        </button>
+
+                        <button type="button" onclick="applyScenario('stopFromMonth4')" class="w-full text-left px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition flex items-center justify-between group">
+                            <div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-blue-800">3. Chỉ nộp 3 tháng đầu, dừng nộp giữ đến cuối kỳ</div>
+                                <div class="text-[11px] text-slate-500">Bảo lưu số dư 3 kỳ đầu hưởng nguyên lãi suất gửi góp</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-blue-600"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- CỘT PHẢI: BẢNG MINH HỌA CHI TIẾT & BẢN IN A4 -->
+            <section class="lg:col-span-8 print-container">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-7 print-container">
+
+                    <!-- TIÊU ĐỀ QUỐC HIỆU & LOGO CHỈ HIỆN KHI IN RA GIẤY A4 -->
+                    <div class="print-only mb-5 border-b-2 border-slate-800 pb-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-sm uppercase">QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ</h3>
+                                <p class="text-xs">Địa chỉ: Xã Yên Thọ, tỉnh Thanh Hóa</p>
+                                <p class="text-xs">Ấn phẩm: Phiếu tư vấn & Minh họa dòng tiền gửi góp</p>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="font-bold text-xs uppercase">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h3>
+                                <p class="text-xs font-semibold underline">Độc lập - Tự do - Hạnh phúc</p>
+                                <p class="text-[11px] italic mt-1" id="printCurrentDate">Yên Thọ, ngày ... tháng ... năm 202...</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <h1 class="text-lg font-extrabold uppercase tracking-wide">BẢNG MINH HỌA KẾ HOẠCH TIẾT KIỆM GỬI GÓP ĐỊNH KỲ</h1>
+                            <p class="text-xs italic">(Áp dụng phương pháp tính lãi theo số dư thực tế và số ngày duy trì thực tế - Cơ sở 365 ngày/năm)</p>
+                        </div>
+
+                        <!-- Thông tin khách hàng trên bản in -->
+                        <div class="grid grid-cols-2 gap-x-6 gap-y-1.5 mt-4 text-xs bg-slate-50 p-3 rounded-lg border border-slate-300">
+                            <div><span class="font-semibold">Họ và tên khách hàng:</span> <span id="p_custName" class="font-bold uppercase">NGUYỄN THỊ HOA</span></div>
+                            <div><span class="font-semibold">Số điện thoại:</span> <span id="p_custPhone">0988.xxx.xxx</span></div>
+                            <div><span class="font-semibold">Số CCCD / Mã TV:</span> <span id="p_custCode">038185xxxxxx</span></div>
+                            <div><span class="font-semibold">Địa chỉ:</span> <span id="p_custAddress">Xã Yên Thọ, Thanh Hóa</span></div>
+                            <div><span class="font-semibold">Kỳ hạn đăng ký:</span> <span id="p_term" class="font-bold">12 tháng</span></div>
+                            <div><span class="font-semibold">Lãi suất cam kết cố định:</span> <span id="p_rate" class="font-bold">5,5%/năm</span></div>
+                            <div><span class="font-semibold">Ngày mở sổ dự kiến:</span> <span id="p_startDate">...</span></div>
+                            <div><span class="font-semibold">Ngày đáo hạn tất toán:</span> <span id="p_maturityDate" class="font-bold">...</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 4 THẺ CHỈ SỐ TỔNG HỢP (KPI CARDS) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-6">
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                            <div class="text-[11px] font-semibold uppercase text-slate-500">Tổng gốc tích lũy</div>
+                            <div id="kpiTotalPrincipal" class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">24.000.000 đ</div>
+                            <div id="kpiDepositCount" class="text-[11px] text-slate-500 mt-0.5">12 kỳ nộp tiền</div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                            <div class="text-[11px] font-semibold uppercase text-emerald-800">Tổng tiền lãi thực nhận</div>
+                            <div id="kpiTotalInterest" class="text-lg sm:text-xl font-extrabold text-emerald-700 mt-1">+717.563 đ</div>
+                            <div id="kpiRateBadge" class="text-[11px] text-emerald-700 font-medium mt-0.5">Lãi suất: 5,5%/năm</div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200">
+                            <div class="text-[11px] font-semibold uppercase text-amber-900">Tổng nhận khi đáo hạn</div>
+                            <div id="kpiTotalPayout" class="text-lg sm:text-xl font-extrabold text-amber-800 mt-1">24.717.563 đ</div>
+                            <div id="kpiMaturityDate" class="text-[11px] text-amber-800 font-medium mt-0.5">Đáo hạn: ...</div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-blue-50/60 border border-blue-200">
+                            <div class="text-[11px] font-semibold uppercase text-blue-800">Kỳ hạn vốn bình quân</div>
+                            <div id="kpiAvgDuration" class="text-lg sm:text-xl font-extrabold text-blue-900 mt-1">6,5 tháng</div>
+                            <div id="kpiCofComparison" class="text-[11px] text-blue-700 mt-0.5">An toàn chi phí vốn Quỹ</div>
+                        </div>
+                    </div>
+
+                    <!-- THANH CÔNG CỤ BẢNG (Ẩn khi in) -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3 no-print">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-table-list text-emerald-600"></i>
+                                Bảng chi tiết dòng tiền và lãi tính theo ngày thực tế
+                            </h3>
+                            <p class="text-xs text-slate-500">Giao dịch viên có thể <strong>sửa trực tiếp Ngày thực nộp hoặc Số tiền nộp</strong> ở từng kỳ bên dưới để giải đáp mọi câu hỏi của khách.</p>
+                        </div>
+                        <span id="scenarioStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                            Kịch bản: Nộp đúng hạn chuẩn
+                        </span>
+                    </div>
+
+                    <!-- BẢNG DÒNG TIỀN CHI TIẾT -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-left border-collapse print-table">
+                            <thead>
+                                <tr class="bg-slate-800 text-white text-xs uppercase tracking-wider">
+                                    <th class="py-3 px-3 text-center w-12">Kỳ</th>
+                                    <th class="py-3 px-3">Ngày hẹn định kỳ</th>
+                                    <th class="py-3 px-3">Ngày thực nộp</th>
+                                    <th class="py-3 px-3 text-right">Số tiền nộp (VNĐ)</th>
+                                    <th class="py-3 px-3 text-center">Số ngày gửi thực tế</th>
+                                    <th class="py-3 px-3 text-right">Tiền lãi kỳ này (VNĐ)</th>
+                                    <th class="py-3 px-3 text-right">Gốc lũy kế (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleTableBody" class="divide-y divide-slate-200 text-sm">
+                                <!-- Các dòng sẽ được render bằng JS -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-slate-100 font-bold text-slate-900 border-t-2 border-slate-300 text-sm">
+                                    <td colspan="3" class="py-3 px-3 text-right uppercase text-xs">Tổng cộng khi đáo hạn (<span id="footMaturityDate">...</span>):</td>
+                                    <td id="footTotalPrincipal" class="py-3 px-3 text-right text-slate-900">24.000.000</td>
+                                    <td id="footAvgDays" class="py-3 px-3 text-center text-xs text-slate-600">TB: 198 ngày</td>
+                                    <td id="footTotalInterest" class="py-3 px-3 text-right text-emerald-700">+717.563</td>
+                                    <td id="footTotalPayout" class="py-3 px-3 text-right text-amber-800">24.717.563</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- KHỐI SO SÁNH LÃI SUẤT CÙNG KỲ HẠN (12T) & KỲ HẠN VỐN BÌNH QUÂN (6-7T) -->
+                    <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 no-print">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-scale-unbalanced-flip text-emerald-600"></i>
+                                Bảng đối chiếu: Gửi góp vs. Kỳ hạn vốn bình quân (<span id="cmpTitleAvgTerm">6-7 tháng</span>) & Cùng kỳ hạn (<span id="cmpTitleSameTerm">12 tháng</span>)
+                            </h4>
+                            <span class="text-[11px] font-medium text-slate-500 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
+                                Kỳ hạn lưu vốn bình quân thực tế: <strong id="cmpBadgeAvgMonths" class="text-blue-700">6,5 tháng</strong>
+                            </span>
+                        </div>
+
+                        <!-- 3 Thẻ đối chiếu trực diện trên cùng dòng tiền tích lũy -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs mb-4">
+                            <!-- Cột 1: Theo Lãi suất Gửi góp đang chọn -->
+                            <div class="p-3.5 bg-emerald-50/70 rounded-xl border-2 border-emerald-400 relative">
+                                <span class="px-2 py-0.5 text-[10px] font-bold uppercase bg-emerald-600 text-white rounded-md">Đang áp dụng</span>
+                                <div class="font-bold text-slate-800 mt-1.5">1. Tiết kiệm Gửi góp (<span id="cmpCardInstallRate">5,5%</span>/năm)</div>
+                                <div id="cmpInstallmentInterest" class="text-base font-extrabold text-emerald-700 mt-1">717.563 đ tiền lãi</div>
+                                <div class="text-[11px] text-slate-600 mt-1">
+                                    Lãi kỳ cuối (tháng thứ <span id="cmpLastPeriodNum">12</span>): <strong id="cmpLastMonthInterest" class="text-emerald-800">9.041 đ</strong>
+                                </div>
+                            </div>
+
+                            <!-- Cột 2: So với Lãi suất kỳ hạn gần nhất với kỳ hạn vốn bình quân (VD: 6-7 tháng) -->
+                            <div class="p-3.5 bg-white rounded-xl border border-blue-200">
+                                <span class="px-2 py-0.5 text-[10px] font-bold uppercase bg-blue-100 text-blue-800 rounded-md">Kỳ hạn vốn TB tương đương</span>
+                                <div class="font-bold text-slate-800 mt-1.5">2. Nếu tính theo LS <span id="cmpCardAvgLabel">6-7 tháng</span> (<span id="cmpCardAvgRate">5,2%</span>/năm)</div>
+                                <div id="cmpAvgTermCashflowInterest" class="text-base font-extrabold text-blue-700 mt-1">678.427 đ tiền lãi</div>
+                                <div id="cmpDiffVsAvgTerm" class="text-[11px] text-blue-700 font-medium mt-1">
+                                    Gửi góp có lợi hơn: +39.136 đ
+                                </div>
+                            </div>
+
+                            <!-- Cột 3: So với Lãi suất thông thường Cùng kỳ hạn (VD: 12 tháng) -->
+                            <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+                                <span class="px-2 py-0.5 text-[10px] font-bold uppercase bg-slate-200 text-slate-700 rounded-md">Cùng kỳ hạn danh nghĩa</span>
+                                <div class="font-bold text-slate-800 mt-1.5">3. Nếu tính theo LS <span id="cmpCardSameLabel">12 tháng</span> (<span id="cmpRefRate">6,0%</span>/năm)</div>
+                                <div id="cmpSameTermCashflowInterest" class="text-base font-extrabold text-slate-800 mt-1">782.795 đ tiền lãi</div>
+                                <div id="cmpDiffVsSameTerm" class="text-[11px] text-amber-700 font-medium mt-1">
+                                    Quỹ tiết kiệm COF: 65.232 đ/sổ
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bảng so sánh chi tiết với gửi 1 lần (Lump-sum) -->
+                        <div class="overflow-x-auto bg-white rounded-xl border border-slate-200">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                        <th class="py-2 px-3">Phương án so sánh trên tổng vốn gốc (<span id="cmpTableTotalPrincipal">24.000.000 đ</span>)</th>
+                                        <th class="py-2 px-3 text-center">Lãi suất (%/năm)</th>
+                                        <th class="py-2 px-3 text-center">Thời gian vốn nằm tại Quỹ</th>
+                                        <th class="py-2 px-3 text-right">Tổng tiền lãi Quỹ chi</th>
+                                        <th class="py-2 px-3">Nhận định Quản trị vốn (ALM) & Tư vấn</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr class="bg-emerald-50/40 font-medium">
+                                        <td class="py-2 px-3 font-bold text-emerald-900">Gửi góp định kỳ hàng tháng (Đang tính)</td>
+                                        <td id="tblRateInstall" class="py-2 px-3 text-center font-bold text-emerald-700">5,5%/năm</td>
+                                        <td id="tblDaysInstall" class="py-2 px-3 text-center">TB 198 ngày (~6,5 tháng)</td>
+                                        <td id="tblIntInstall" class="py-2 px-3 text-right font-bold text-emerald-700">717.563 đ</td>
+                                        <td id="cmpSavingsRatio" class="py-2 px-3 text-emerald-700">Chỉ bằng 49,8% chi phí lãi gửi 1 lần đầu kỳ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-semibold text-blue-900">Gửi 1 lần theo kỳ hạn vốn bình quân (<span id="tblLabelAvgTerm">6-7 tháng</span>)</td>
+                                        <td id="tblRateAvg" class="py-2 px-3 text-center font-semibold text-blue-700">5,2%/năm</td>
+                                        <td id="tblDaysAvg" class="py-2 px-3 text-center">198 ngày (~6,5 tháng)</td>
+                                        <td id="tblIntAvgLump" class="py-2 px-3 text-right font-bold text-blue-700">678.427 đ</td>
+                                        <td id="tblNoteAvg" class="py-2 px-3 text-slate-600">Chênh lệch +39.136 đ thưởng cho cam kết khóa sổ 12T</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3 font-semibold text-slate-700">Gửi 1 lần ngay từ đầu kỳ (<span id="tblLabelSameTerm">12 tháng</span>)</td>
+                                        <td id="tblRateSame" class="py-2 px-3 text-center font-semibold">6,0%/năm</td>
+                                        <td id="tblDaysSame" class="py-2 px-3 text-center">Trọn 365 ngày (12 tháng)</td>
+                                        <td id="cmpLumpSumInterest" class="py-2 px-3 text-right font-bold text-slate-800">1.440.000 đ</td>
+                                        <td class="py-2 px-3 text-slate-500">Đòi hỏi khách phải có sẵn 100% vốn ngay từ Ngày 1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- GHI CHÚ QUY ĐỊNH TRÊN BẢN IN & MÀN HÌNH -->
+                    <div class="mt-5 p-4 rounded-xl bg-amber-50/60 border border-amber-200 text-xs space-y-1.5 text-slate-700">
+                        <div class="font-bold text-slate-900 uppercase flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-amber-600 no-print"></i>
+                            <span>Lưu ý quan trọng theo Quy định sản phẩm Tiết kiệm gửi góp định kỳ (QTDND Yên Thọ):</span>
+                        </div>
+                        <p>1. <strong>Nguyên tắc tính lãi:</strong> Tiền lãi từng kỳ = (Số tiền nộp thực tế &times; Số ngày gửi thực tế &times; Lãi suất cam kết) / 365. Số ngày gửi thực tế tính từ ngày Quỹ nhận tiền đến ngày liền kề trước ngày đáo hạn.</p>
+                        <p>2. <strong>Quy định nộp chậm & nộp bù:</strong> Thời gian ân hạn nộp chậm tối đa <strong>05 ngày làm việc</strong>. Trường hợp khách hàng nộp trễ hoặc nộp dồn (nộp bù) cho kỳ đã quên trước đó, tiền lãi chỉ bắt đầu tính kể từ ngày Quỹ thực tế nhận tiền (không tính lãi hồi tố).</p>
+                        <p>3. <strong>Gián đoạn nộp tiền:</strong> Nếu khách hàng dừng nộp từ 02 kỳ liên tiếp trở lên, hệ thống tạm khóa chiều nộp thêm; toàn bộ số tiền gốc đã gửi trước đó vẫn được bảo lưu đến ngày đáo hạn và hưởng nguyên mức lãi suất gửi góp đã cam kết.</p>
+                        <p>4. <strong>Rút trước hạn & Hỗ trợ vay cầm cố:</strong> Không áp dụng rút một phần gốc trước hạn. Nếu tất toán toàn bộ sổ trước hạn sẽ áp dụng lãi suất không kỳ hạn (0,2%/năm). Khi cần vốn đột xuất, Quý khách được ưu tiên <strong>vay cầm cố chính Sổ tiết kiệm gửi góp</strong> (tối đa 90% số dư gốc đã tích lũy) để bảo toàn 100% tiền lãi gửi góp.</p>
+                    </div>
+
+                    <!-- CHỮ KÝ CHỈ HIỆN KHI IN RA GIẤY A4 -->
+                    <div class="print-flex justify-between items-start mt-8 pt-4 text-xs text-center">
+                        <div class="w-1/2">
+                            <p class="font-bold uppercase">KHÁCH HÀNG ĐƯỢC TƯ VẤN</p>
+                            <p class="italic text-[11px]">(Ký và ghi rõ họ tên)</p>
+                            <div class="h-20"></div>
+                            <p id="p_signCustName" class="font-semibold">Nguyễn Thị Hoa</p>
+                        </div>
+                        <div class="w-1/2">
+                            <p class="font-bold uppercase">CÁN BỘ TƯ VẤN / GIAO DỊCH VIÊN</p>
+                            <p class="italic text-[11px]">(Ký và ghi rõ họ tên)</p>
+                            <div class="h-20"></div>
+                            <p class="font-semibold">....................................................</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- MODAL SO SÁNH: RÚT TRƯỚC HẠN VS VAY CẦM CỐ SỔ GỬI GÓP -->
+    <div id="pledgeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn">
+            <div class="bg-emerald-900 text-white px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-scale-balanced text-amber-400 text-lg"></i>
+                    <h3 class="font-bold text-base">Tư vấn: Rút trước hạn vs. Vay cầm cố Sổ tiết kiệm gửi góp</h3>
+                </div>
+                <button onclick="closePledgeModal()" class="text-emerald-200 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-5 max-h-[82vh] overflow-y-auto">
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Công cụ này giúp Giao dịch viên chứng minh bằng con số cụ thể cho thành viên thấy: Khi đã gửi góp được nhiều tháng mà cần tiền gấp, <strong>Vay cầm cố lại chính Sổ gửi góp</strong> sẽ có lợi hơn rất nhiều so với việc <strong>Tất toán rút trước hạn</strong>.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tháng khách cần tiền gấp</label>
+                        <select id="pledgeAtPeriod" onchange="calculatePledgeComparison()" class="w-full px-3 py-2 text-sm font-bold rounded-lg border border-slate-300 bg-white outline-none">
+                            <!-- Được tạo động theo số kỳ -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Số tiền khách cần dùng (VNĐ)</label>
+                        <input type="text" inputmode="numeric" id="pledgeLoanAmount" value="10.000.000" oninput="handleMoneyInput(this); calculatePledgeComparison();" class="w-full px-3 py-2 text-sm font-bold rounded-lg border border-slate-300 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Lãi suất vay cầm cố (%/năm)</label>
+                        <input type="number" id="pledgeLoanRate" value="7.5" step="0.1" oninput="calculatePledgeComparison()" class="w-full px-3 py-2 text-sm font-bold rounded-lg border border-slate-300 outline-none">
+                    </div>
+                </div>
+
+                <!-- Bảng đọ 2 phương án -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Phương án A: Phá sổ rút trước hạn -->
+                    <div class="p-4 rounded-xl border-2 border-rose-200 bg-rose-50/40">
+                        <div class="text-xs font-bold uppercase text-rose-700 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            Phương án 1: Tất toán rút trước hạn
+                        </div>
+                        <div class="mt-3 space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Số dư gốc đã nộp tính đến kỳ đó:</span>
+                                <span id="pl_accPrincipal" class="font-bold">18.000.000 đ</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Lãi không kỳ hạn nhận được (0,2%/năm):</span>
+                                <span id="pl_earlyInterest" class="font-bold text-rose-700">14.500 đ</span>
+                            </div>
+                            <div class="flex justify-between border-t border-rose-200 pt-2">
+                                <span class="font-semibold text-slate-800">Số tiền lãi gửi góp bị mất trắng:</span>
+                                <span id="pl_lostInterest" class="font-extrabold text-rose-700">-680.000 đ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phương án B: Vay cầm cố sổ -->
+                    <div class="p-4 rounded-xl border-2 border-emerald-300 bg-emerald-50/50">
+                        <div class="text-xs font-bold uppercase text-emerald-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Phương án 2: Vay cầm cố Sổ gửi góp
+                        </div>
+                        <div class="mt-3 space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Tổng lãi gửi góp giữ được khi đáo hạn:</span>
+                                <span id="pl_keptInterest" class="font-bold text-emerald-700">+717.563 đ</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-600">Tiền lãi vay cầm cố phải trả (<span id="pl_remainDays">90</span> ngày cuối):</span>
+                                <span id="pl_loanCost" class="font-bold text-slate-800">-184.932 đ</span>
+                            </div>
+                            <div class="flex justify-between border-t border-emerald-200 pt-2">
+                                <span class="font-semibold text-slate-800">Lợi ích ròng còn thu về:</span>
+                                <span id="pl_netBenefit" class="font-extrabold text-emerald-800">+532.631 đ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pledgeAdviceBox" class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 font-medium leading-relaxed">
+                    <!-- Lời khuyên tự động -->
+                </div>
+            </div>
+
+            <div class="bg-slate-100 px-6 py-3.5 flex justify-end">
+                <button onclick="closePledgeModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-700 transition">Đóng cửa sổ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- TRẠNG THÁI DỮ LIỆU TOÀN CỤC ---
+        let currentTermMonths = 12;
+        let scheduleData = []; // Mảng chứa các kỳ nộp tiền
+        let maturityDateObj = new Date();
+
+        // Định dạng tiền tệ VNĐ (1.000.000)
+        function formatVND(num) {
+            return Math.round(Number(num) || 0).toLocaleString('vi-VN');
+        }
+
+        // Chuyển chuỗi có dấu chấm phân cách hàng nghìn (VD: "2.000.000") về số nguyên
+        function parseMoney(str) {
+            if (typeof str === 'number') return str;
+            const cleaned = String(str || '').replace(/\D/g, '');
+            return cleaned ? parseInt(cleaned, 10) : 0;
+        }
+
+        // Định dạng trực tiếp ô input có dấu phân cách hàng nghìn khi người dùng đang gõ
+        function handleMoneyInput(inputEl) {
+            const rawDigits = inputEl.value.replace(/\D/g, '');
+            if (!rawDigits) {
+                inputEl.value = '0';
+                return 0;
+            }
+            const numericVal = parseInt(rawDigits, 10);
+            inputEl.value = numericVal.toLocaleString('vi-VN');
+            return numericVal;
+        }
+
+        // Định dạng Date sang chuỗi YYYY-MM-DD cho thẻ input[type="date"]
+        function toInputDateStr(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        // Định dạng Date sang chuỗi DD/MM/YYYY hiển thị kiểu Việt Nam
+        function toVNDateStr(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return `${d}/${m}/${y}`;
+        }
+
+        // Chuyển đổi chuỗi YYYY-MM-DD sang đối tượng Date (giờ 00:00:00 địa phương)
+        function parseLocalDate(yyyy_mm_dd) {
+            const parts = yyyy_mm_dd.split('-');
+            return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 0, 0, 0);
+        }
+
+        // Tính số ngày chênh lệch chính xác giữa 2 mốc ngày
+        function diffDays(d1, d2) {
+            const utc1 = Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate());
+            const utc2 = Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate());
+            return Math.max(0, Math.round((utc2 - utc1) / (1000 * 60 * 60 * 24)));
+        }
+
+        // Cộng thêm số tháng vào một ngày
+        function addMonthsKeepDay(baseDate, monthsToAdd, preferredDay) {
+            const targetYear = baseDate.getFullYear();
+            const targetMonth = baseDate.getMonth() + monthsToAdd;
+            const d = new Date(targetYear, targetMonth, 1);
+            const maxDaysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+            d.setDate(Math.min(preferredDay, maxDaysInMonth));
+            return d;
+        }
+
+        // Dời ngày nếu rơi vào Thứ 7 (6) hoặc Chủ nhật (0) sang Thứ 2 liền kề
+        function adjustIfWeekend(dateObj, shouldShift) {
+            const cloned = new Date(dateObj.getTime());
+            if (!shouldShift) return cloned;
+            const dayOfWeek = cloned.getDay();
+            if (dayOfWeek === 6) {
+                cloned.setDate(cloned.getDate() + 2); // Thứ 7 -> Thứ 2
+            } else if (dayOfWeek === 0) {
+                cloned.setDate(cloned.getDate() + 1); // Chủ Nhật -> Thứ 2
+            }
+            return cloned;
+        }
+
+        // Đọc số tiền chẵn ra chữ ngắn gọn gợi ý
+        function readSimpleMoneyHint(amount) {
+            if (!amount || amount <= 0) return '0 đồng';
+            if (amount >= 1000000) {
+                const tr = amount / 1000000;
+                return `${tr.toLocaleString('vi-VN')} triệu đồng / tháng`;
+            }
+            return `${(amount / 1000).toLocaleString('vi-VN')} nghìn đồng / tháng`;
+        }
+
+        // Hiển thị thông báo nhanh
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            const text = document.getElementById('toastText');
+            text.textContent = msg;
+            box.classList.remove('hidden');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                box.classList.add('hidden');
+            }, 2600);
+        }
+
+        // Nhãn kỳ hạn bình quân tương ứng với từng kỳ hạn đăng ký
+        function getAvgTermLabel(months) {
+            if (months === 6) return '3-4 tháng';
+            if (months === 12) return '6-7 tháng';
+            if (months === 18) return '9-10 tháng';
+            if (months === 24) return '12-13 tháng';
+            return `${((months + 1) / 2).toFixed(1)} tháng`;
+        }
+
+        // Chọn nhanh kỳ hạn gửi góp
+        function selectTerm(months, suggestedRate, refSameRate, refAvgRate) {
+            currentTermMonths = months;
+            document.getElementById('interestRate').value = suggestedRate;
+            document.getElementById('refStandardRate').value = refSameRate;
+            document.getElementById('refAvgTermRate').value = refAvgRate;
+
+            const avgLabel = getAvgTermLabel(months);
+            document.getElementById('lblAvgTermRate').textContent = `LS kỳ ${avgLabel} (%)`;
+            document.getElementById('lblSameTermRate').textContent = `LS kỳ ${months}T (%)`;
+
+            // Highlight nút kỳ hạn đang chọn
+            [6, 12, 18, 24].forEach(m => {
+                const btn = document.getElementById(`termBtn_${m}`);
+                if (m === months) {
+                    btn.className = 'term-btn py-2 px-1 rounded-xl border-2 border-emerald-600 bg-emerald-600 text-white text-center shadow-sm transition';
+                } else {
+                    btn.className = 'term-btn py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-emerald-50 text-center transition';
+                }
+            });
+
+            onParameterChange();
+            showToast(`Đã chọn kỳ hạn ${months} tháng (LS gửi góp: ${suggestedRate}% | LS ${avgLabel}: ${refAvgRate}% | LS ${months}T: ${refSameRate}%)`);
+        }
+
+        // Chọn nhanh mệnh giá tiền gửi hàng tháng
+        function setQuickAmount(val) {
+            document.getElementById('monthlyAmount').value = formatVND(val);
+            onParameterChange();
+        }
+
+        // Khi thay đổi các tham số gốc -> Khởi tạo lại lịch chuẩn
+        function onParameterChange() {
+            const monthlyAmount = parseMoney(document.getElementById('monthlyAmount').value);
+            document.getElementById('amountTextHint').textContent = readSimpleMoneyHint(monthlyAmount);
+
+            const startStr = document.getElementById('startDate').value;
+            if (!startStr) return;
+            const startDate = parseLocalDate(startStr);
+            const dayRule = document.getElementById('depositDayRule').value;
+            const shiftWeekend = document.getElementById('shiftWeekend').checked;
+
+            const preferredDay = dayRule === 'same' ? startDate.getDate() : Number(dayRule);
+
+            // Ngày đáo hạn sổ luôn tính tròn kỳ hạn từ ngày mở sổ (Kỳ 1)
+            maturityDateObj = addMonthsKeepDay(startDate, currentTermMonths, startDate.getDate());
+
+            scheduleData = [];
+            for (let i = 0; i < currentTermMonths; i++) {
+                let scheduledDate;
+                if (i === 0) {
+                    scheduledDate = new Date(startDate.getTime());
+                } else {
+                    scheduledDate = addMonthsKeepDay(startDate, i, preferredDay);
+                }
+
+                const actualDate = adjustIfWeekend(scheduledDate, shiftWeekend);
+
+                scheduleData.push({
+                    period: i + 1,
+                    scheduledDate: scheduledDate,
+                    actualDateStr: toInputDateStr(actualDate),
+                    amount: monthlyAmount,
+                    note: ''
+                });
+            }
+
+            document.getElementById('scenarioStatusBadge').textContent = 'Kịch bản: Nộp đúng hạn chuẩn';
+            document.getElementById('scenarioStatusBadge').className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+
+            renderAndCalculateTable();
+            syncPrintHeader();
+        }
+
+        // Áp dụng các kịch bản mô phỏng nhanh để tư vấn tại quầy
+        function applyScenario(type) {
+            // Reset về chuẩn trước
+            onParameterChange();
+            const baseAmount = parseMoney(document.getElementById('monthlyAmount').value) || 2000000;
+            const badge = document.getElementById('scenarioStatusBadge');
+
+            if (type === 'standard') {
+                showToast('Đã đặt về kịch bản nộp đúng hạn 100%');
+                return;
+            }
+
+            if (type === 'skipAndDouble' && scheduleData.length >= 5) {
+                // Kỳ 4 quên nộp (0đ), Kỳ 5 nộp bù gấp đôi (2 x baseAmount)
+                scheduleData[3].amount = 0;
+                scheduleData[3].note = 'Quên nộp kỳ 4';
+                scheduleData[4].amount = baseAmount * 2;
+                scheduleData[4].note = 'Nộp dồn kỳ 4 + kỳ 5';
+
+                badge.textContent = 'Mô phỏng: Quên nộp Kỳ 4, nộp bù gấp đôi vào Kỳ 5';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+                showToast('Đã mô phỏng: Kỳ 4 = 0đ, Kỳ 5 nộp gấp đôi (Tính lãi từ ngày thực nộp Kỳ 5)');
+            } else if (type === 'stopFromMonth4' && scheduleData.length >= 4) {
+                // Chỉ nộp 3 tháng đầu, từ tháng 4 trở đi = 0đ
+                for (let i = 3; i < scheduleData.length; i++) {
+                    scheduleData[i].amount = 0;
+                    scheduleData[i].note = 'Dừng nộp';
+                }
+                badge.textContent = 'Mô phỏng: Chỉ nộp 3 kỳ đầu, dừng nộp giữ đến đáo hạn';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300';
+                showToast('Đã mô phỏng: Dừng nộp từ Kỳ 4 nhưng giữ nguyên lãi suất 3 kỳ đầu đến đáo hạn');
+            }
+
+            renderAndCalculateTable();
+        }
+
+        // Khi giao dịch viên chỉnh sửa trực tiếp ngày thực nộp hoặc số tiền nộp trên từng dòng của bảng
+        function onRowEdit(index, field, inputElOrVal) {
+            if (field === 'actualDateStr') {
+                scheduleData[index].actualDateStr = inputElOrVal;
+            } else if (field === 'amount') {
+                const numericVal = handleMoneyInput(inputElOrVal);
+                scheduleData[index].amount = Math.max(0, numericVal);
+            }
+            const badge = document.getElementById('scenarioStatusBadge');
+            badge.textContent = 'Kịch bản: Tùy chỉnh theo thực tế khách hàng';
+            badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-300';
+            recalculateFromTable();
+        }
+
+        // Vẽ lại bảng và tính toán toàn bộ chỉ số
+        function renderAndCalculateTable() {
+            const tbody = document.getElementById('scheduleTableBody');
+            tbody.innerHTML = '';
+
+            scheduleData.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.id = `row_${idx}`;
+
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 text-center font-bold text-slate-700">${row.period}</td>
+                    <td class="py-2.5 px-3 text-slate-600 text-xs">${toVNDateStr(row.scheduledDate)}</td>
+                    <td class="py-2.5 px-3">
+                        <input type="date" value="${row.actualDateStr}" 
+                            onchange="onRowEdit(${idx}, 'actualDateStr', this.value)"
+                            class="print-input px-2 py-1 text-xs font-semibold rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2.5 px-3 text-right">
+                        <input type="text" inputmode="numeric" value="${formatVND(row.amount)}"
+                            oninput="onRowEdit(${idx}, 'amount', this)"
+                            class="print-input w-28 sm:w-32 px-2.5 py-1 text-right text-sm font-bold text-slate-900 rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2.5 px-3 text-center font-semibold text-slate-700" id="days_${idx}">0</td>
+                    <td class="py-2.5 px-3 text-right font-bold text-emerald-700" id="interest_${idx}">0</td>
+                    <td class="py-2.5 px-3 text-right font-semibold text-slate-800" id="cumPrincipal_${idx}">0</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalculateFromTable();
+        }
+
+        // Tính lại số ngày thực tế và tiền lãi mà không làm mất focus ô input đang gõ
+        function recalculateFromTable() {
+            const annualRate = Number(document.getElementById('interestRate').value) || 0;
+            const refSameRate = Number(document.getElementById('refStandardRate').value) || 0;
+            const refAvgRate = Number(document.getElementById('refAvgTermRate').value) || 0;
+
+            let totalPrincipal = 0;
+            let totalInterest = 0;
+            let sameTermCashflowInterest = 0;
+            let avgTermCashflowInterest = 0;
+            let weightedDaysSum = 0;
+            let activeDepositCount = 0;
+            let lastMonthInterest = 0;
+            let lastActivePeriod = scheduleData.length;
+
+            scheduleData.forEach((row, idx) => {
+                const actualDate = parseLocalDate(row.actualDateStr);
+                const daysHeld = diffDays(actualDate, maturityDateObj);
+                const rowInterest = (row.amount * daysHeld * (annualRate / 100)) / 365;
+                const rowSameRateInt = (row.amount * daysHeld * (refSameRate / 100)) / 365;
+                const rowAvgRateInt = (row.amount * daysHeld * (refAvgRate / 100)) / 365;
+
+                totalPrincipal += row.amount;
+                totalInterest += rowInterest;
+                sameTermCashflowInterest += rowSameRateInt;
+                avgTermCashflowInterest += rowAvgRateInt;
+                weightedDaysSum += (row.amount * daysHeld);
+
+                if (row.amount > 0) {
+                    activeDepositCount++;
+                    lastMonthInterest = rowInterest;
+                    lastActivePeriod = row.period;
+                }
+
+                // Cập nhật DOM từng dòng
+                const daysCell = document.getElementById(`days_${idx}`);
+                const interestCell = document.getElementById(`interest_${idx}`);
+                const cumCell = document.getElementById(`cumPrincipal_${idx}`);
+                const rowEl = document.getElementById(`row_${idx}`);
+
+                if (daysCell) daysCell.textContent = `${daysHeld} ngày`;
+                if (interestCell) interestCell.textContent = formatVND(rowInterest);
+                if (cumCell) cumCell.textContent = formatVND(totalPrincipal);
+
+                // Tô màu nhẹ nếu kỳ đó khách không nộp (0đ)
+                if (rowEl) {
+                    if (row.amount === 0) {
+                        rowEl.classList.add('bg-rose-50/40', 'text-slate-400');
+                    } else {
+                        rowEl.classList.remove('bg-rose-50/40', 'text-slate-400');
+                    }
+                }
+            });
+
+            const roundedTotalInterest = Math.round(totalInterest);
+            const roundedSameTermCFInt = Math.round(sameTermCashflowInterest);
+            const roundedAvgTermCFInt = Math.round(avgTermCashflowInterest);
+            const totalPayout = totalPrincipal + roundedTotalInterest;
+            const avgDays = totalPrincipal > 0 ? Math.round(weightedDaysSum / totalPrincipal) : 0;
+            const avgMonths = (avgDays / 30.4167).toFixed(1).replace('.', ',');
+
+            // Cập nhật KPI Cards
+            document.getElementById('kpiTotalPrincipal').textContent = `${formatVND(totalPrincipal)} đ`;
+            document.getElementById('kpiDepositCount').textContent = `${activeDepositCount}/${scheduleData.length} kỳ có nộp tiền`;
+            document.getElementById('kpiTotalInterest').textContent = `+${formatVND(roundedTotalInterest)} đ`;
+            document.getElementById('kpiRateBadge').textContent = `Lãi suất cố định: ${annualRate.toString().replace('.', ',')}%/năm`;
+            document.getElementById('kpiTotalPayout').textContent = `${formatVND(totalPayout)} đ`;
+            document.getElementById('kpiMaturityDate').textContent = `Đáo hạn: ${toVNDateStr(maturityDateObj)}`;
+            document.getElementById('kpiAvgDuration').textContent = `${avgMonths} tháng`;
+            document.getElementById('kpiCofComparison').textContent = `Trung bình ${avgDays} ngày lưu vốn`;
+
+            // Cập nhật Footer của Bảng
+            document.getElementById('footMaturityDate').textContent = toVNDateStr(maturityDateObj);
+            document.getElementById('footTotalPrincipal').textContent = formatVND(totalPrincipal);
+            document.getElementById('footAvgDays').textContent = `TB: ${avgDays} ngày`;
+            document.getElementById('footTotalInterest').textContent = `+${formatVND(roundedTotalInterest)}`;
+            document.getElementById('footTotalPayout').textContent = formatVND(totalPayout);
+
+            // Cập nhật Khối so sánh Lãi suất Cùng kỳ hạn (12T) & Kỳ hạn vốn bình quân (6-7T)
+            const avgTermLabel = getAvgTermLabel(currentTermMonths);
+            const totalTermDays = scheduleData.length > 0 ? diffDays(scheduleData[0].scheduledDate, maturityDateObj) : 365;
+            const lumpSumSameTermInterest = Math.round((totalPrincipal * totalTermDays * (refSameRate / 100)) / 365);
+            const ratio = lumpSumSameTermInterest > 0 ? ((roundedTotalInterest / lumpSumSameTermInterest) * 100).toFixed(1).replace('.', ',') : '0';
+
+            const diffVsAvg = roundedTotalInterest - roundedAvgTermCFInt;
+            const diffVsSame = roundedSameTermCFInt - roundedTotalInterest;
+
+            document.getElementById('cmpTitleAvgTerm').textContent = avgTermLabel;
+            document.getElementById('cmpTitleSameTerm').textContent = `${currentTermMonths} tháng`;
+            document.getElementById('cmpBadgeAvgMonths').textContent = `${avgMonths} tháng (${avgDays} ngày)`;
+
+            document.getElementById('cmpCardInstallRate').textContent = `${annualRate.toString().replace('.', ',')}%`;
+            document.getElementById('cmpInstallmentInterest').textContent = `${formatVND(roundedTotalInterest)} đ tiền lãi`;
+            document.getElementById('cmpLastPeriodNum').textContent = lastActivePeriod;
+            document.getElementById('cmpLastMonthInterest').textContent = `${formatVND(lastMonthInterest)} đ`;
+
+            document.getElementById('cmpCardAvgLabel').textContent = avgTermLabel;
+            document.getElementById('cmpCardAvgRate').textContent = `${refAvgRate.toString().replace('.', ',')}%`;
+            document.getElementById('cmpAvgTermCashflowInterest').textContent = `${formatVND(roundedAvgTermCFInt)} đ tiền lãi`;
+            document.getElementById('cmpDiffVsAvgTerm').textContent = diffVsAvg >= 0
+                ? `Khách lợi hơn LS ${avgTermLabel}: +${formatVND(diffVsAvg)} đ`
+                : `Thấp hơn LS ${avgTermLabel}: ${formatVND(diffVsAvg)} đ`;
+
+            document.getElementById('cmpCardSameLabel').textContent = `${currentTermMonths} tháng`;
+            document.getElementById('cmpRefRate').textContent = `${refSameRate.toString().replace('.', ',')}%`;
+            document.getElementById('cmpSameTermCashflowInterest').textContent = `${formatVND(roundedSameTermCFInt)} đ tiền lãi`;
+            document.getElementById('cmpDiffVsSameTerm').textContent = diffVsSame >= 0
+                ? `Quỹ tiết kiệm COF: ${formatVND(diffVsSame)} đ so với áp LS ${currentTermMonths}T`
+                : `Cao hơn áp LS ${currentTermMonths}T: +${formatVND(Math.abs(diffVsSame))} đ`;
+
+            // Cập nhật bảng đối chiếu tổng thể
+            document.getElementById('cmpTableTotalPrincipal').textContent = `${formatVND(totalPrincipal)} đ`;
+            document.getElementById('tblRateInstall').textContent = `${annualRate.toString().replace('.', ',')}%/năm`;
+            document.getElementById('tblDaysInstall').textContent = `TB ${avgDays} ngày (~${avgMonths} tháng)`;
+            document.getElementById('tblIntInstall').textContent = `${formatVND(roundedTotalInterest)} đ`;
+            document.getElementById('cmpSavingsRatio').textContent = `Chỉ bằng ${ratio}% tiền lãi gửi 1 lần đầu kỳ`;
+
+            document.getElementById('tblLabelAvgTerm').textContent = avgTermLabel;
+            document.getElementById('tblRateAvg').textContent = `${refAvgRate.toString().replace('.', ',')}%/năm`;
+            document.getElementById('tblDaysAvg').textContent = `${avgDays} ngày (~${avgMonths} tháng)`;
+            document.getElementById('tblIntAvgLump').textContent = `${formatVND(roundedAvgTermCFInt)} đ`;
+            document.getElementById('tblNoteAvg').textContent = diffVsAvg >= 0
+                ? `Cộng biên độ +${(annualRate - refAvgRate).toFixed(1).replace('.', ',')}%/năm (+${formatVND(diffVsAvg)} đ) thưởng cam kết giữ vốn ${currentTermMonths}T`
+                : `Thấp hơn kỳ hạn vốn bình quân ${formatVND(Math.abs(diffVsAvg))} đ`;
+
+            document.getElementById('tblLabelSameTerm').textContent = `${currentTermMonths} tháng`;
+            document.getElementById('tblRateSame').textContent = `${refSameRate.toString().replace('.', ',')}%/năm`;
+            document.getElementById('tblDaysSame').textContent = `Trọn ${totalTermDays} ngày (${currentTermMonths} tháng)`;
+            document.getElementById('cmpLumpSumInterest').textContent = `${formatVND(lumpSumSameTermInterest)} đ`;
+
+            syncPrintHeader();
+        }
+
+        // Áp dụng các kịch bản mô phỏng nhanh để tư vấn tại quầy
+        function applyScenario(type) {
+            // Reset về chuẩn trước
+            onParameterChange();
+            const baseAmount = Number(document.getElementById('monthlyAmount').value) || 2000000;
+            const badge = document.getElementById('scenarioStatusBadge');
+
+            if (type === 'standard') {
+                showToast('Đã đặt về kịch bản nộp đúng hạn 100%');
+                return;
+            }
+
+            if (type === 'skipAndDouble' && scheduleData.length >= 5) {
+                // Kỳ 4 quên nộp (0đ), Kỳ 5 nộp bù gấp đôi (2 x baseAmount)
+                scheduleData[3].amount = 0;
+                scheduleData[3].note = 'Quên nộp kỳ 4';
+                scheduleData[4].amount = baseAmount * 2;
+                scheduleData[4].note = 'Nộp dồn kỳ 4 + kỳ 5';
+
+                badge.textContent = 'Mô phỏng: Quên nộp Kỳ 4, nộp bù gấp đôi vào Kỳ 5';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+                showToast('Đã mô phỏng: Kỳ 4 = 0đ, Kỳ 5 nộp gấp đôi (Tính lãi từ ngày thực nộp Kỳ 5)');
+            } else if (type === 'stopFromMonth4' && scheduleData.length >= 4) {
+                // Chỉ nộp 3 tháng đầu, từ tháng 4 trở đi = 0đ
+                for (let i = 3; i < scheduleData.length; i++) {
+                    scheduleData[i].amount = 0;
+                    scheduleData[i].note = 'Dừng nộp';
+                }
+                badge.textContent = 'Mô phỏng: Chỉ nộp 3 kỳ đầu, dừng nộp giữ đến đáo hạn';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-300';
+                showToast('Đã mô phỏng: Dừng nộp từ Kỳ 4 nhưng giữ nguyên lãi suất 3 kỳ đầu đến đáo hạn');
+            }
+
+            renderAndCalculateTable();
+        }
+
+        // Khi giao dịch viên chỉnh sửa trực tiếp ngày thực nộp hoặc số tiền nộp trên từng dòng của bảng
+        function onRowEdit(index, field, newValue) {
+            if (field === 'actualDateStr') {
+                scheduleData[index].actualDateStr = newValue;
+            } else if (field === 'amount') {
+                scheduleData[index].amount = Math.max(0, Number(newValue) || 0);
+            }
+            const badge = document.getElementById('scenarioStatusBadge');
+            badge.textContent = 'Kịch bản: Tùy chỉnh theo thực tế khách hàng';
+            badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-300';
+            recalculateFromTable();
+        }
+
+        // Vẽ lại bảng và tính toán toàn bộ chỉ số
+        function renderAndCalculateTable() {
+            const tbody = document.getElementById('scheduleTableBody');
+            tbody.innerHTML = '';
+
+            scheduleData.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.id = `row_${idx}`;
+
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 text-center font-bold text-slate-700">${row.period}</td>
+                    <td class="py-2.5 px-3 text-slate-600 text-xs">${toVNDateStr(row.scheduledDate)}</td>
+                    <td class="py-2.5 px-3">
+                        <input type="date" value="${row.actualDateStr}" 
+                            onchange="onRowEdit(${idx}, 'actualDateStr', this.value)"
+                            class="print-input px-2 py-1 text-xs font-semibold rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2.5 px-3 text-right">
+                        <input type="number" value="${row.amount}" step="100000" min="0"
+                            oninput="onRowEdit(${idx}, 'amount', this.value)"
+                            class="print-input w-28 sm:w-32 px-2 py-1 text-right text-sm font-bold text-slate-900 rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none">
+                    </td>
+                    <td class="py-2.5 px-3 text-center font-semibold text-slate-700" id="days_${idx}">0</td>
+                    <td class="py-2.5 px-3 text-right font-bold text-emerald-700" id="interest_${idx}">0</td>
+                    <td class="py-2.5 px-3 text-right font-semibold text-slate-800" id="cumPrincipal_${idx}">0</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalculateFromTable();
+        }
+
+        // Tính lại số ngày thực tế và tiền lãi mà không làm mất focus ô input đang gõ
+        function recalculateFromTable() {
+            const annualRate = Number(document.getElementById('interestRate').value) || 0;
+            const refRate = Number(document.getElementById('refStandardRate').value) || 0;
+
+            let totalPrincipal = 0;
+            let totalInterest = 0;
+            let weightedDaysSum = 0;
+            let activeDepositCount = 0;
+            let lastMonthInterest = 0;
+
+            scheduleData.forEach((row, idx) => {
+                const actualDate = parseLocalDate(row.actualDateStr);
+                const daysHeld = diffDays(actualDate, maturityDateObj);
+                const rowInterest = (row.amount * daysHeld * (annualRate / 100)) / 365;
+
+                totalPrincipal += row.amount;
+                totalInterest += rowInterest;
+                weightedDaysSum += (row.amount * daysHeld);
+
+                if (row.amount > 0) {
+                    activeDepositCount++;
+                    lastMonthInterest = rowInterest;
+                }
+
+                // Cập nhật DOM từng dòng
+                const daysCell = document.getElementById(`days_${idx}`);
+                const interestCell = document.getElementById(`interest_${idx}`);
+                const cumCell = document.getElementById(`cumPrincipal_${idx}`);
+                const rowEl = document.getElementById(`row_${idx}`);
+
+                if (daysCell) daysCell.textContent = `${daysHeld} ngày`;
+                if (interestCell) interestCell.textContent = formatVND(rowInterest);
+                if (cumCell) cumCell.textContent = formatVND(totalPrincipal);
+
+                // Tô màu nhẹ nếu kỳ đó khách không nộp (0đ)
+                if (rowEl) {
+                    if (row.amount === 0) {
+                        rowEl.classList.add('bg-rose-50/40', 'text-slate-400');
+                    } else {
+                        rowEl.classList.remove('bg-rose-50/40', 'text-slate-400');
+                    }
+                }
+            });
+
+            const roundedTotalInterest = Math.round(totalInterest);
+            const totalPayout = totalPrincipal + roundedTotalInterest;
+            const avgDays = totalPrincipal > 0 ? Math.round(weightedDaysSum / totalPrincipal) : 0;
+            const avgMonths = (avgDays / 30.4167).toFixed(1).replace('.', ',');
+
+            // Cập nhật KPI Cards
+            document.getElementById('kpiTotalPrincipal').textContent = `${formatVND(totalPrincipal)} đ`;
+            document.getElementById('kpiDepositCount').textContent = `${activeDepositCount}/${scheduleData.length} kỳ có nộp tiền`;
+            document.getElementById('kpiTotalInterest').textContent = `+${formatVND(roundedTotalInterest)} đ`;
+            document.getElementById('kpiRateBadge').textContent = `Lãi suất cố định: ${annualRate.toString().replace('.', ',')}%/năm`;
+            document.getElementById('kpiTotalPayout').textContent = `${formatVND(totalPayout)} đ`;
+            document.getElementById('kpiMaturityDate').textContent = `Đáo hạn: ${toVNDateStr(maturityDateObj)}`;
+            document.getElementById('kpiAvgDuration').textContent = `${avgMonths} tháng`;
+            document.getElementById('kpiCofComparison').textContent = `Trung bình ${avgDays} ngày lưu vốn`;
+
+            // Cập nhật Footer của Bảng
+            document.getElementById('footMaturityDate').textContent = toVNDateStr(maturityDateObj);
+            document.getElementById('footTotalPrincipal').textContent = formatVND(totalPrincipal);
+            document.getElementById('footAvgDays').textContent = `TB: ${avgDays} ngày`;
+            document.getElementById('footTotalInterest').textContent = `+${formatVND(roundedTotalInterest)}`;
+            document.getElementById('footTotalPayout').textContent = formatVND(totalPayout);
+
+            // Cập nhật Khối so sánh Chi phí vốn (COF)
+            const totalTermDays = scheduleData.length > 0 ? diffDays(scheduleData[0].scheduledDate, maturityDateObj) : 365;
+            const lumpSumInterest = Math.round((totalPrincipal * totalTermDays * (refRate / 100)) / 365);
+            const ratio = lumpSumInterest > 0 ? ((roundedTotalInterest / lumpSumInterest) * 100).toFixed(1).replace('.', ',') : '0';
+
+            document.getElementById('cmpRefRate').textContent = `${refRate.toString().replace('.', ',')}%`;
+            document.getElementById('cmpLumpSumInterest').textContent = `${formatVND(lumpSumInterest)} đ tiền lãi`;
+            document.getElementById('cmpInstallmentInterest').textContent = `${formatVND(roundedTotalInterest)} đ tiền lãi`;
+            document.getElementById('cmpSavingsRatio').textContent = `Chỉ bằng ${ratio}% chi phí lãi gửi 1 lần đầu kỳ`;
+            document.getElementById('cmpLastMonthInterest').textContent = `${formatVND(lastMonthInterest)} đ`;
+
+            syncPrintHeader();
+        }
+
+        // Đồng bộ thông tin khách hàng sang phần Header của trang in A4
+        function syncPrintHeader() {
+            const name = document.getElementById('custName').value || '....................................................';
+            const phone = document.getElementById('custPhone').value || '....................................';
+            const code = document.getElementById('custCode').value || '....................................';
+            const address = document.getElementById('custAddress').value || '....................................................';
+            const rate = document.getElementById('interestRate').value || '5.5';
+
+            document.getElementById('p_custName').textContent = name;
+            document.getElementById('p_signCustName').textContent = name;
+            document.getElementById('p_custPhone').textContent = phone;
+            document.getElementById('p_custCode').textContent = code;
+            document.getElementById('p_custAddress').textContent = address;
+            document.getElementById('p_term').textContent = `${currentTermMonths} tháng`;
+            document.getElementById('p_rate').textContent = `${rate.toString().replace('.', ',')}%/năm`;
+
+            if (scheduleData.length > 0) {
+                document.getElementById('p_startDate').textContent = toVNDateStr(scheduleData[0].scheduledDate);
+                document.getElementById('p_maturityDate').textContent = toVNDateStr(maturityDateObj);
+            }
+
+            const now = new Date();
+            document.getElementById('printCurrentDate').textContent = 
+                `Yên Thọ, ngày ${String(now.getDate()).padStart(2, '0')} tháng ${String(now.getMonth() + 1).padStart(2, '0')} năm ${now.getFullYear()}`;
+        }
+
+        function resetCustomerInfo() {
+            document.getElementById('custName').value = '';
+            document.getElementById('custPhone').value = '';
+            document.getElementById('custCode').value = '';
+            document.getElementById('custAddress').value = '';
+            syncPrintHeader();
+            showToast('Đã xóa trống thông tin khách hàng');
+        }
+
+        // --- XỬ LÝ MODAL SO SÁNH RÚT TRƯỚC HẠN VS VAY CẦM CỐ SỔ ---
+        function openPledgeModal() {
+            const selectEl = document.getElementById('pledgeAtPeriod');
+            selectEl.innerHTML = '';
+
+            // Cho phép chọn từ kỳ 2 đến kỳ kế cuối
+            for (let i = 1; i < scheduleData.length; i++) {
+                const opt = document.createElement('option');
+                opt.value = i; // index
+                opt.textContent = `Tại Kỳ thứ ${i + 1} (${toVNDateStr(scheduleData[i].scheduledDate)})`;
+                if (i === Math.floor(scheduleData.length * 0.75)) opt.selected = true;
+                selectEl.appendChild(opt);
+            }
+
+            const modal = document.getElementById('pledgeModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            calculatePledgeComparison();
+        }
+
+        function closePledgeModal() {
+            const modal = document.getElementById('pledgeModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function calculatePledgeComparison() {
+            const periodIdx = Number(document.getElementById('pledgeAtPeriod').value) || 1;
+            const loanRate = Number(document.getElementById('pledgeLoanRate').value) || 7.5;
+            const depositRate = Number(document.getElementById('interestRate').value) || 5.5;
+            const nonTermRate = 0.2; // Lãi không kỳ hạn 0.2%/năm
+
+            const eventDate = scheduleData[periodIdx].scheduledDate;
+            const remainDaysToMaturity = diffDays(eventDate, maturityDateObj);
+
+            // Tính số dư gốc đã tích lũy tính đến kỳ đó và tiền lãi không kỳ hạn nếu phá sổ
+            let accumulatedPrincipal = 0;
+            let earlyWithdrawalInterest = 0;
+            let fullMaturityInterest = 0;
+
+            scheduleData.forEach((row, idx) => {
+                const actDate = parseLocalDate(row.actualDateStr);
+                const fullDays = diffDays(actDate, maturityDateObj);
+                fullMaturityInterest += (row.amount * fullDays * (depositRate / 100)) / 365;
+
+                if (idx <= periodIdx) {
+                    accumulatedPrincipal += row.amount;
+                    const daysUntilBreak = diffDays(actDate, eventDate);
+                    earlyWithdrawalInterest += (row.amount * daysUntilBreak * (nonTermRate / 100)) / 365;
+                }
+            });
+
+            // Giới hạn vay tối đa 90% số dư gốc đã tích lũy
+            const maxLoanAllowed = Math.floor((accumulatedPrincipal * 0.9) / 100000) * 100000;
+            let requestedLoan = parseMoney(document.getElementById('pledgeLoanAmount').value);
+            if (requestedLoan > maxLoanAllowed && maxLoanAllowed > 0) {
+                requestedLoan = maxLoanAllowed;
+                document.getElementById('pledgeLoanAmount').value = formatVND(requestedLoan);
+            }
+
+            const loanInterestCost = (requestedLoan * remainDaysToMaturity * (loanRate / 100)) / 365;
+            const netInterestKept = fullMaturityInterest - loanInterestCost;
+            const lostInterestIfBreak = fullMaturityInterest - earlyWithdrawalInterest;
+
+            document.getElementById('pl_accPrincipal').textContent = `${formatVND(accumulatedPrincipal)} đ`;
+            document.getElementById('pl_earlyInterest').textContent = `${formatVND(earlyWithdrawalInterest)} đ`;
+            document.getElementById('pl_lostInterest').textContent = `-${formatVND(lostInterestIfBreak)} đ`;
+
+            document.getElementById('pl_keptInterest').textContent = `+${formatVND(fullMaturityInterest)} đ`;
+            document.getElementById('pl_remainDays').textContent = remainDaysToMaturity;
+            document.getElementById('pl_loanCost').textContent = `-${formatVND(loanInterestCost)} đ`;
+            document.getElementById('pl_netBenefit').textContent = `${netInterestKept >= 0 ? '+' : ''}${formatVND(netInterestKept)} đ`;
+
+            const diffAdvantage = Math.round(netInterestKept - earlyWithdrawalInterest);
+            const adviceEl = document.getElementById('pledgeAdviceBox');
+            adviceEl.innerHTML = `
+                <i class="fa-solid fa-lightbulb text-amber-600 mr-1"></i>
+                <strong>Lời thoại tư vấn cho Giao dịch viên:</strong> "Tính đến kỳ thứ ${periodIdx + 1}, bác đã tích lũy được <strong>${formatVND(accumulatedPrincipal)} đ</strong> (hạn mức vay cầm cố tối đa 90% là <strong>${formatVND(maxLoanAllowed)} đ</strong>). Nếu bác rút trước hạn lúc này, cả sổ chỉ được tính lãi không kỳ hạn 0,2%/năm được vỏn vẹn <strong>${formatVND(earlyWithdrawalInterest)} đ</strong>. Ngược lại, nếu bác vay cầm cố <strong>${formatVND(requestedLoan)} đ</strong> trong ${remainDaysToMaturity} ngày còn lại, sau khi trừ tiền lãi vay, bác vẫn lời thêm được <strong>${formatVND(diffAdvantage)} đ</strong> so với phá sổ!"
+            `;
+        }
+
+        // --- KHỞI TẠO KHI MỞ TRANG ---
+        window.onload = function () {
+            const today = new Date();
+            document.getElementById('startDate').value = toInputDateStr(today);
+            selectTerm(12, 5.5, 6.0, 5.2);
+        };
+    </script>
+</body>
+</html>

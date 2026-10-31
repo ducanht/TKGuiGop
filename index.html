@@ -22,7 +22,65 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 
+        <!-- Flatpickr CSS & Custom Emerald Theme (Chuẩn tiếng Việt GMT+7) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
+    <style>
+        /* Tùy biến Flatpickr Theme Emerald theo nhận diện QTDND Yên Thọ */
+        .flatpickr-calendar {
+            font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif !important;
+            border-radius: 1rem !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #ffffff !important;
+        }
+        .flatpickr-months .flatpickr-month {
+            background: #064e3b !important;
+            color: #ffffff !important;
+            border-top-left-radius: 1rem !important;
+            border-top-right-radius: 1rem !important;
+            padding: 8px 0 !important;
+        }
+        .flatpickr-current-month .flatpickr-monthDropdown-months,
+        .flatpickr-current-month input.cur-year {
+            font-weight: 700 !important;
+            color: #ffffff !important;
+        }
+        .flatpickr-months .flatpickr-prev-month, 
+        .flatpickr-months .flatpickr-next-month {
+            color: #ffffff !important;
+            fill: #ffffff !important;
+        }
+        .flatpickr-months .flatpickr-prev-month:hover svg, 
+        .flatpickr-months .flatpickr-next-month:hover svg {
+            fill: #a7f3d0 !important;
+        }
+        span.flatpickr-weekday {
+            color: #064e3b !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+        }
+        .flatpickr-day.selected, 
+        .flatpickr-day.startRange, 
+        .flatpickr-day.endRange {
+            background: #047857 !important;
+            border-color: #047857 !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+        .flatpickr-day:hover {
+            background: #ecfdf5 !important;
+            color: #064e3b !important;
+        }
+        .flatpickr-day.today {
+            border-color: #10b981 !important;
+            font-weight: 700 !important;
+        }
+    </style>
+
     <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/vn.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -502,8 +560,11 @@
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 mb-1">Ngày mở sổ (Kỳ 1)</label>
-                                    <input type="date" id="startDate" onchange="onParameterChange();"
-                                        class="w-full px-2.5 py-2 text-xs font-semibold rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <div class="relative flex items-center">
+                                        <input type="text" id="startDate" inputmode="numeric" placeholder="dd/mm/yyyy" onchange="onParameterChange();"
+                                            class="w-full pl-3 pr-8 py-2 text-xs font-semibold rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none bg-white text-slate-900 cursor-pointer tabular-nums">
+                                        <span class="absolute right-2.5 text-slate-400 pointer-events-none text-xs">📅</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 mb-1">Ngày nộp định kỳ</label>
@@ -4057,9 +4118,44 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
             return `${d}/${m}/${y}`;
         }
 
+        // Định dạng cấu hình tiếng Việt chuẩn cho Flatpickr
+        const VIETNAMESE_LOCALE = {
+            firstDayOfWeek: 1, // Thứ Hai là ngày đầu tuần chuẩn Việt Nam
+            weekdays: {
+                shorthand: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                longhand: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy']
+            },
+            months: {
+                shorthand: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6', 'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+                longhand: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12']
+            },
+            rangeSeparator: ' đến ',
+            time_24hr: true,
+            today: 'Hôm nay',
+            clear: 'Xóa'
+        };
+
         function parseLocalDate(str) {
-            const [y, m, d] = str.split('-').map(Number);
-            return new Date(y, m - 1, d);
+            if (!str) return new Date();
+            if (str instanceof Date) return str;
+            const cleanStr = String(str).trim();
+            // Định dạng dd/mm/yyyy
+            if (cleanStr.includes('/')) {
+                const parts = cleanStr.split('/').map(Number);
+                if (parts.length === 3) {
+                    const [d, m, y] = parts;
+                    return new Date(y, m - 1, d);
+                }
+            }
+            // Định dạng yyyy-mm-dd
+            if (cleanStr.includes('-')) {
+                const parts = cleanStr.split('-').map(Number);
+                if (parts.length === 3) {
+                    const [y, m, d] = parts;
+                    return new Date(y, m - 1, d);
+                }
+            }
+            return new Date(cleanStr);
         }
 
         function diffDays(d1, d2) {
@@ -4339,9 +4435,13 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
                     <td class="py-2.5 px-2.5 text-center font-bold text-slate-700">${row.period}</td>
                     <td class="py-2.5 px-3 text-slate-600 text-xs">${toVNDateStr(row.scheduledDate)}</td>
                     <td class="py-2.5 px-3">
-                        <input type="date" value="${row.actualDateStr}" 
-                            onchange="onRowEdit(${idx}, 'actualDateStr', this.value)"
-                            class="px-2 py-1 text-xs font-semibold rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none">
+                        <div class="relative inline-flex items-center">
+                            <input type="text" id="actualDateInput_${idx}" value="${toVNDateStr(row.actualDate)}" 
+                                data-idx="${idx}"
+                                placeholder="dd/mm/yyyy"
+                                class="actual-date-picker px-2 py-1 pr-6 text-xs font-semibold rounded-lg border border-slate-300 bg-white focus:ring-1 focus:ring-emerald-500 outline-none w-28 text-center cursor-pointer tabular-nums">
+                            <span class="absolute right-1.5 text-slate-400 pointer-events-none text-[10px]">📅</span>
+                        </div>
                     </td>
                     <td class="py-2.5 px-3 text-right">
                         <input type="text" inputmode="numeric" value="${formatVND(row.amount)}"
@@ -4356,7 +4456,33 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
             });
 
             recalculateFromTable();
+            initTableFlatpickrs();
         }
+        function initTableFlatpickrs() {
+            if (!window.flatpickr) return;
+            document.querySelectorAll('.actual-date-picker').forEach(input => {
+                const idx = Number(input.getAttribute('data-idx'));
+                if (isNaN(idx) || !scheduleData[idx]) return;
+
+                if (input._flatpickr) {
+                    input._flatpickr.destroy();
+                }
+
+                flatpickr(input, {
+                    locale: VIETNAMESE_LOCALE,
+                    dateFormat: 'd/m/Y',
+                    disableMobile: true, // BẮT BUỘC: Không fallback về date input của HĐH
+                    allowInput: true,
+                    defaultDate: scheduleData[idx].actualDate,
+                    onChange: function(selectedDates, dateStr) {
+                        if (selectedDates.length > 0) {
+                            onRowEdit(idx, 'actualDateStr', dateStr);
+                        }
+                    }
+                });
+            });
+        }
+
 
         function recalculateFromTable() {
             const rate = Number(document.getElementById('interestRate').value) || 0;
@@ -5297,7 +5423,21 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
         window.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
             const dateInput = document.getElementById('startDate');
-            if (dateInput) dateInput.value = toInputDateStr(today);
+            if (dateInput) {
+                dateInput.value = toVNDateStr(today);
+                if (window.flatpickr) {
+                    flatpickr(dateInput, {
+                        locale: VIETNAMESE_LOCALE,
+                        dateFormat: 'd/m/Y',
+                        disableMobile: true, // BẮT BUỘC: Giữ nguyên lịch tiếng Việt trên mobile
+                        allowInput: true,
+                        defaultDate: today,
+                        onChange: function(selectedDates, dateStr) {
+                            onParameterChange();
+                        }
+                    });
+                }
+            }
 
             onParameterChange();
 

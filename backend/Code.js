@@ -223,18 +223,19 @@ function doPost(e) {
       payload = e.parameter || {};
     }
 
-    const canBoName = (payload.name || payload.canBoName || '').trim();
-    const canBoRole = (payload.role || '').trim();
-    const soSao = Number(payload.rating || payload.soSao || 5);
-    const danhGia = (payload.danhGia || payload.level || '').trim();
-    const nhanXet = (payload.comment || payload.nhanXet || '').trim();
+    const canBoName = sanitizeForSheet((payload.name || payload.canBoName || '').trim());
+    const canBoRole = sanitizeForSheet((payload.role || '').trim());
+    let soSao = Number(payload.rating || payload.soSao || 5);
+    if (isNaN(soSao) || soSao < 1 || soSao > 5) soSao = 5;
+    const danhGia = sanitizeForSheet((payload.danhGia || payload.level || '').trim());
+    const nhanXet = sanitizeForSheet((payload.comment || payload.nhanXet || '').trim());
     const nowStr = Utilities.formatDate(new Date(), 'Asia/Ho_Chi_Minh', 'dd/MM/yyyy HH:mm:ss');
 
-    if (!canBoName) {
-      return createJsonResponse({ success: false, message: 'Vui lòng chọn hoặc nhập họ tên cán bộ thẩm định.' });
+    if (!canBoName || canBoName.length > 100) {
+      return createJsonResponse({ success: false, message: 'Họ tên cán bộ không hợp lệ (tối đa 100 ký tự).' });
     }
-    if (!nhanXet) {
-      return createJsonResponse({ success: false, message: 'Vui lòng nhập nội dung ý kiến đóng góp.' });
+    if (!nhanXet || nhanXet.length > 2500) {
+      return createJsonResponse({ success: false, message: 'Vui lòng nhập nội dung ý kiến đóng góp hợp lệ (tối đa 2500 ký tự).' });
     }
 
     // 1. Thêm vào sheet Y_KIEN_DONG_GOP
@@ -283,6 +284,19 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/**
+ * Chuẩn hóa và chống Formula Injection (CWE-1236) khi lưu vào Google Sheets
+ * Tự động vô hiệu hóa các ký tự điều khiển công thức (=, +, -, @, \t, \r)
+ */
+function sanitizeForSheet(val) {
+  if (val === null || val === undefined) return '';
+  const str = String(val).trim();
+  if (/^[=+\-@\t\r]/.test(str)) {
+    return "'" + str;
+  }
+  return str;
 }
 
 function createJsonResponse(data) {

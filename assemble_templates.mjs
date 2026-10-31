@@ -85,7 +85,7 @@ const templatesContent = `
         <div class="text-center font-sans">
           <div class="font-bold text-xs uppercase text-slate-900">QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ</div>
           <div class="text-[11px] text-slate-600">Thôn Tân Lộc, xã Quý Lộc, tỉnh Thanh Hóa</div>
-          <div class="text-[11px] text-slate-600">Hotline: 0966.381.189 - 0989.349.336</div>
+          <div class="text-[11px] text-slate-600">Hotline: 0965.122.111 - 0941.562.789</div>
         </div>
         <div class="text-center font-sans">
           <div class="font-bold text-xs uppercase text-slate-900">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>

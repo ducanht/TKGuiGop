@@ -213,7 +213,7 @@ const html = `<!DOCTYPE html>
             <div>
                 <div class="font-bold uppercase text-slate-900">QUỸ TÍN DỤNG NHÂN DÂN YÊN THỌ</div>
                 <div>Thôn Tân Lộc, xã Quý Lộc, tỉnh Thanh Hóa</div>
-                <div>Hotline: 0966.381.189 - 0989.349.336</div>
+                <div>Hotline: 0965.122.111 - 0941.562.789</div>
             </div>
             <div class="text-right">
                 <div class="font-bold uppercase text-slate-900">BẢNG KẾ HOẠCH TÍCH LŨY TIẾT KIỆM GỬI GÓP</div>

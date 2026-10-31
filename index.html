@@ -24,57 +24,155 @@
 
         <!-- Flatpickr CSS & Custom Emerald Theme (Chuẩn tiếng Việt GMT+7) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
-    <style>
-        /* Tùy biến Flatpickr Theme Emerald theo nhận diện QTDND Yên Thọ */
+        <style>
+        /* ================= FLATPICKR VIETNAMESE CALENDAR THEME EMERALD (CHUẨN QTDND YÊN THỌ) ================= */
         .flatpickr-calendar {
             font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif !important;
-            border-radius: 1rem !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
             border: 1px solid #cbd5e1 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 16px 36px -6px rgba(6, 78, 59, 0.2), 0 6px 16px -2px rgba(15, 23, 42, 0.08) !important;
             background: #ffffff !important;
+            overflow: hidden;
+            width: 320px !important;
+            max-width: 95vw !important;
+            padding-bottom: 8px;
+        }
+        .flatpickr-months {
+            background: linear-gradient(135deg, #064e3b 0%, #047857 100%) !important;
+            color: #ffffff !important;
+            padding: 8px 6px !important;
+            border-radius: 15px 15px 0 0 !important;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
         .flatpickr-months .flatpickr-month {
-            background: #064e3b !important;
             color: #ffffff !important;
-            border-top-left-radius: 1rem !important;
-            border-top-right-radius: 1rem !important;
-            padding: 8px 0 !important;
+            fill: #ffffff !important;
+            height: 38px !important;
         }
-        .flatpickr-current-month .flatpickr-monthDropdown-months,
-        .flatpickr-current-month input.cur-year {
+        .flatpickr-current-month {
+            font-size: 1.05rem !important;
             font-weight: 700 !important;
             color: #ffffff !important;
+            padding: 4px 0 0 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
         }
-        .flatpickr-months .flatpickr-prev-month, 
+        .flatpickr-current-month .cur-month {
+            font-weight: 800 !important;
+            color: #ffffff !important;
+        }
+        .flatpickr-current-month input.cur-year {
+            font-weight: 800 !important;
+            color: #ffffff !important;
+            font-family: 'Be Vietnam Pro', system-ui, sans-serif !important;
+            font-variant-numeric: tabular-nums;
+        }
+        .flatpickr-current-month .numInputWrapper span.arrowUp:after {
+            border-bottom-color: #ffffff !important;
+        }
+        .flatpickr-current-month .numInputWrapper span.arrowDown:after {
+            border-top-color: #ffffff !important;
+        }
+        .flatpickr-months .flatpickr-prev-month,
         .flatpickr-months .flatpickr-next-month {
             color: #ffffff !important;
             fill: #ffffff !important;
+            height: 32px !important;
+            width: 32px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 8px !important;
+            transition: background 0.15s ease;
+            top: 10px !important;
         }
-        .flatpickr-months .flatpickr-prev-month:hover svg, 
-        .flatpickr-months .flatpickr-next-month:hover svg {
-            fill: #a7f3d0 !important;
+        .flatpickr-months .flatpickr-prev-month:hover,
+        .flatpickr-months .flatpickr-next-month:hover {
+            background: rgba(255, 255, 255, 0.25) !important;
+            color: #ffffff !important;
+        }
+        .flatpickr-months .flatpickr-prev-month svg,
+        .flatpickr-months .flatpickr-next-month svg {
+            width: 16px !important;
+            height: 16px !important;
+            fill: #ffffff !important;
+            stroke: #ffffff !important;
+        }
+        .flatpickr-weekdays {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 6px 0 !important;
+            height: auto !important;
         }
         span.flatpickr-weekday {
             color: #064e3b !important;
-            font-weight: 700 !important;
-            font-size: 11px !important;
+            font-weight: 800 !important;
+            font-size: 12px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .flatpickr-day.selected, 
-        .flatpickr-day.startRange, 
-        .flatpickr-day.endRange {
-            background: #047857 !important;
-            border-color: #047857 !important;
-            color: #ffffff !important;
-            font-weight: 700 !important;
+        .flatpickr-days {
+            width: 320px !important;
+            padding: 6px 4px;
+        }
+        .dayContainer {
+            width: 312px !important;
+            min-width: 312px !important;
+            max-width: 312px !important;
+            justify-content: space-around;
+        }
+        .flatpickr-day {
+            font-family: 'Be Vietnam Pro', system-ui, sans-serif !important;
+            font-variant-numeric: tabular-nums !important;
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            color: #0f172a !important;
+            height: 38px !important;
+            line-height: 38px !important;
+            max-width: 38px !important;
+            border-radius: 10px !important;
+            margin: 2px 1px !important;
+            border: 1px solid transparent;
+            transition: all 0.12s ease-in-out;
         }
         .flatpickr-day:hover {
             background: #ecfdf5 !important;
             color: #064e3b !important;
+            border-color: #a7f3d0 !important;
         }
         .flatpickr-day.today {
-            border-color: #10b981 !important;
-            font-weight: 700 !important;
+            border-color: #047857 !important;
+            color: #047857 !important;
+            font-weight: 800 !important;
+            background: rgba(6, 78, 59, 0.05) !important;
+        }
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: #047857 !important;
+            border-color: #047857 !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            box-shadow: 0 4px 10px rgba(4, 120, 87, 0.35) !important;
+        }
+        .flatpickr-day.prevMonthDay,
+        .flatpickr-day.nextMonthDay {
+            color: #94a3b8 !important;
+            font-weight: 400 !important;
+        }
+        @media (max-width: 576px) {
+            .flatpickr-calendar {
+                width: 310px !important;
+                max-width: calc(100vw - 20px) !important;
+                margin: 0 auto !important;
+            }
+            .flatpickr-days { width: 100% !important; }
+            .dayContainer { width: 100% !important; min-width: 100% !important; max-width: 100% !important; }
+            .flatpickr-day { height: 38px !important; line-height: 38px !important; max-width: 38px !important; }
         }
     </style>
 
@@ -4471,8 +4569,11 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
                 flatpickr(input, {
                     locale: VIETNAMESE_LOCALE,
                     dateFormat: 'd/m/Y',
-                    disableMobile: true, // BẮT BUỘC: Không fallback về date input của HĐH
+                    disableMobile: true,
                     allowInput: true,
+                    monthSelectorType: 'static', // BẮT BUỘC: Hiển thị tháng cố định, chuyển bằng nút < >, không dùng dropdown select gây lỗi vỡ giao diện
+                    prevArrow: '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>',
+                    nextArrow: '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>',
                     defaultDate: scheduleData[idx].actualDate,
                     onChange: function(selectedDates, dateStr) {
                         if (selectedDates.length > 0) {
@@ -5429,8 +5530,11 @@ Ngay từ khi mở sổ, khách hàng phải được thông báo và xác nhậ
                     flatpickr(dateInput, {
                         locale: VIETNAMESE_LOCALE,
                         dateFormat: 'd/m/Y',
-                        disableMobile: true, // BẮT BUỘC: Giữ nguyên lịch tiếng Việt trên mobile
+                        disableMobile: true,
                         allowInput: true,
+                        monthSelectorType: 'static', // BẮT BUỘC: Chống lỗi dropdown
+                        prevArrow: '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>',
+                        nextArrow: '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>',
                         defaultDate: today,
                         onChange: function(selectedDates, dateStr) {
                             onParameterChange();
